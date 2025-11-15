@@ -43,9 +43,21 @@ top: 0;
 width: 0;
 height: 0;
 border-style: solid;
-border-color: rgba(173, 216, 230, 0.2) transparent transparent transparent; /* Light blue semi-transparent for icy effect */
+border-color: rgba(173, 216, 230, 0.5) transparent transparent transparent; /* Increased opacity for better visibility */
 z-index: 1;
 pointer-events: none;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added subtle shadow for depth */
+}
+.icicle:after {
+content: '';
+position: absolute;
+top: -10px; /* Slight offset for drip effect */
+left: -5px;
+width: 10px;
+height: 10px;
+background: rgba(173, 216, 230, 0.5);
+border-radius: 50%;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 .icicle1 {
 left: 10%;
