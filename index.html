@@ -92,9 +92,11 @@ transition: transform 0.5s ease;
 margin: 0 10px;
 transform-style: preserve-3d;
 transform: rotateY(0deg) translateZ(20px);
+border: 2px solid #e0e0e0; /* Added light grey border for modern look */
 }
 .preview-img:hover {
 transform: rotateY(15deg) scale(1.2) translateZ(100px);
+border-color: #ffffff; /* White border on hover for emphasis */
 }
 .preview-img:nth-child(1) { transform: rotateY(-20deg) translateZ(30px); }
 .preview-img:nth-child(2) { transform: rotateY(0deg) translateZ(50px); }
