@@ -54,6 +54,7 @@
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); /* Elevated shadow */
             transition: transform 0.3s ease; /* Modern hover effect */
+            cursor: pointer; /* Indicate clickable */
         }
         .image-section img:hover {
             transform: scale(1.05);
@@ -67,7 +68,7 @@
         .month-title {
             text-align: center;
             font-size: 28px;
-            color: #d32f2f; /* Red scarf accent */
+            color: #d32f2f; /* Red to match the scarf accent */
             margin-bottom: 20px;
             font-weight: 700;
             text-transform: uppercase;
@@ -88,7 +89,7 @@
             transition: background-color 0.3s ease;
         }
         .calendar-table th {
-            background-color: #4fc3f7; /* Brighter header */
+            background-color: #4fc3f7; /* Brighter sky blue for headers */
             color: #fff;
             font-weight: 400;
             text-transform: uppercase;
@@ -105,6 +106,33 @@
             font-size: 12px;
             color: #81d4fa;
         }
+        /* Modal for zoom */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
         @media (max-width: 768px) {
             .calendar-container {
                 flex-direction: column;
@@ -119,7 +147,7 @@
     <div class="calendar-container">
         <div class="watermark">2026</div> <!-- Pro watermark text; can replace with SVG for patterns -->
         <div class="image-section">
-            <img src="https://i.gyazo.com/0f2396abcd1ab1d7c294eaccaaf7ebd8.png" alt="Your Custom January Image">
+            <img src="https://i.gyazo.com/0f2396abcd1ab1d7c294eaccaaf7ebd8.png" alt="Your Custom January Image" onclick="openModal(this.src)">
         </div>
         <div class="calendar-section">
             <h2 class="month-title">January 2026 ❄️</h2>
@@ -185,5 +213,21 @@
             </table>
         </div>
     </div>
+
+    <!-- Modal structure -->
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img id="modalImage" src="" alt="Zoomed Image">
+    </div>
+
+    <script>
+        function openModal(src) {
+            document.getElementById('modalImage').src = src;
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
