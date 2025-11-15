@@ -37,51 +37,18 @@ pointer-events: none;
 z-index: 1;
 user-select: none;
 }
-.icicle {
+.icicle-watermark {
 position: absolute;
 top: 0;
-width: 0;
-height: 0;
-border-style: solid;
-border-color: rgba(173, 216, 230, 0.5) transparent transparent transparent; /* Increased opacity for better visibility */
-z-index: 1;
+left: 0;
+width: 100%;
+height: 150px; /* Adjust height to fit the icicles */
+background-image: url('https://t3.ftcdn.net/jpg/02/32/29/54/360_F_232295459_lwTe5LUSYtpI7WhvmvaU68HgFdasxGaZ.jpg');
+background-repeat: repeat-x;
+background-size: contain;
+opacity: 0.4; /* Subtle transparency for watermark effect */
 pointer-events: none;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added subtle shadow for depth */
-}
-.icicle:after {
-content: '';
-position: absolute;
-top: -10px; /* Slight offset for drip effect */
-left: -5px;
-width: 10px;
-height: 10px;
-background: rgba(173, 216, 230, 0.5);
-border-radius: 50%;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-.icicle1 {
-left: 10%;
-border-width: 100px 15px 0 15px;
-}
-.icicle2 {
-left: 25%;
-border-width: 70px 10px 0 10px;
-}
-.icicle3 {
-left: 40%;
-border-width: 120px 20px 0 20px;
-}
-.icicle4 {
-left: 55%;
-border-width: 90px 12px 0 12px;
-}
-.icicle5 {
-left: 70%;
-border-width: 80px 15px 0 15px;
-}
-.icicle6 {
-left: 85%;
-border-width: 110px 18px 0 18px;
+z-index: 1;
 }
 .image-section {
 width: 50%;
@@ -226,6 +193,9 @@ flex-direction: column;
 .image-section, .calendar-section {
 width: 100%;
 }
+.icicle-watermark {
+height: 100px; /* Adjust for smaller screens */
+}
 }
 /* Mouse trail styles */
 .trail {
@@ -245,12 +215,7 @@ transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 <body>
 <div class="calendar-container">
 <div class="watermark">2026</div> <!-- Pro watermark text; can replace with SVG for patterns -->
-<div class="icicle icicle1"></div>
-<div class="icicle icicle2"></div>
-<div class="icicle icicle3"></div>
-<div class="icicle icicle4"></div>
-<div class="icicle icicle5"></div>
-<div class="icicle icicle6"></div>
+<div class="icicle-watermark"></div>
 <div class="image-section">
 <img src="https://i.gyazo.com/0f2396abcd1ab1d7c294eaccaaf7ebd8.png" alt="Your Custom January Image" onclick="openModal(this.src)">
 </div>
