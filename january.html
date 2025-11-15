@@ -99,6 +99,10 @@
             letter-spacing: 0.5px;
             cursor: default; /* Headers not clickable */
         }
+        .calendar-table td {
+            color: #81d4fa; /* Light blue for dates */
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; /* Black outline */
+        }
         .calendar-table td:hover {
             background-color: rgba(255, 255, 255, 1);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -122,7 +126,7 @@
             }
         }
         .weekend {
-            color: #757575;
+            color: #81d4fa; /* Light blue for weekends too */
         }
         .snowflake {
             font-size: 12px;
