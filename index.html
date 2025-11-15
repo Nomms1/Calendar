@@ -3,21 +3,284 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My 2026 Calendars</title>
+    <title>Tifa Calendar By Nomms</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-        ul { list-style: none; padding: 0; }
-        li { margin: 10px 0; }
-        a { color: #007bff; text-decoration: none; font-size: 18px; }
-        a:hover { text-decoration: underline; }
+        @property --c1 {
+            syntax: '<color>';
+            inherits: true;
+            initial-value: #f0f4f8;
+        }
+        @property --c2 {
+            syntax: '<color>';
+            inherits: true;
+            initial-value: #d32f2f;
+        }
+        @property --c3 {
+            syntax: '<color>';
+            inherits: true;
+            initial-value: #efebe9;
+        }
+        @property --c4 {
+            syntax: '<color>';
+            inherits: true;
+            initial-value: #6d4c41;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--c1), var(--c2), var(--c3), var(--c4)); /* Variable-based gradient for smooth animation */
+            animation: colorShift 30s infinite alternate ease-in-out; /* Slower, eased for smoother blending */
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+            overflow: hidden; /* For particle effects */
+            position: relative;
+            perspective: 1500px; /* Increased perspective for deeper 3D */
+        }
+        @keyframes colorShift {
+            0% {
+                --c1: #f0f4f8;
+                --c2: #d32f2f;
+                --c3: #efebe9;
+                --c4: #6d4c41;
+            }
+            33% {
+                --c1: #b3e5fc;
+                --c2: #ffca28;
+                --c3: #d7ccc8;
+                --c4: #4fc3f7;
+            }
+            66% {
+                --c1: #e0f7fa;
+                --c2: #c62828;
+                --c3: #ffca28;
+                --c4: #81d4fa;
+            }
+            100% {
+                --c1: #efebe9;
+                --c2: #ffca28;
+                --c3: #d32f2f;
+                --c4: #ffd700;
+            }
+        }
+        h1 {
+            font-size: 42px;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 10px #f57f17; /* Added glow for Tifa theme */
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-in-out, pulseGlow 2s infinite alternate, tilt3D 5s infinite alternate;
+            transform-style: preserve-3d; /* 3D for title */
+            transform: rotateX(15deg) rotateY(10deg); /* Enhanced 3D tilt */
+        }
+        @keyframes tilt3D {
+            0% { transform: rotateX(10deg) rotateY(5deg) translateZ(20px); }
+            100% { transform: rotateX(15deg) rotateY(10deg) translateZ(50px); } /* Added depth variation */
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            z-index: 2; /* Above particles */
+        }
+        li {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15), 0 0 10px rgba(245, 127, 23, 0.5); /* Tifa-inspired orange glow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            overflow: hidden;
+            position: relative;
+            transform-style: preserve-3d; /* Enable 3D for list items */
+            transform: rotateY(10deg) rotateX(5deg) translateZ(30px); /* Initial 3D rotation with depth */
+        }
+        li:hover {
+            transform: translateY(-10px) rotateY(20deg) rotateX(10deg) translateZ(80px); /* Enhanced 3D hover with more depth */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25), 0 0 20px rgba(245, 127, 23, 0.7);
+            background-color: rgba(255, 255, 255, 1);
+        }
+        a {
+            display: block;
+            padding: 25px 50px;
+            color: #f57f17; /* Energetic orange for Tifa theme */
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: 700;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #d32f2f; /* Shift to red on hover */
+        }
+        a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        a:hover::before {
+            opacity: 1;
+        }
+        .month-icon {
+            font-size: 28px;
+            margin-right: 12px;
+            animation: spin 2s linear infinite;
+        }
+        .preview-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            perspective: 2000px; /* Deeper perspective for previews */
+            transform-style: preserve-3d;
+            animation: rotatePreview 10s infinite alternate ease-in-out; /* Eased for smoother motion */
+        }
+        @keyframes rotatePreview {
+            0% { transform: rotateY(-5deg) rotateX(-3deg) translateZ(-20px); }
+            100% { transform: rotateY(5deg) rotateX(3deg) translateZ(20px); } /* Added depth variation */
+        }
+        .preview-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.5s ease;
+            margin: 0 10px;
+            transform-style: preserve-3d;
+            transform: rotateY(0deg) translateZ(20px); /* Added depth */
+        }
+        .preview-img:hover {
+            transform: rotateY(15deg) scale(1.2) translateZ(100px); /* More pronounced pop-out */
+        }
+        .preview-img:nth-child(1) { transform: rotateY(-20deg) translateZ(30px); } /* Left image tilt with depth */
+        .preview-img:nth-child(2) { transform: rotateY(0deg) translateZ(50px); } /* Center pops out more */
+        .preview-img:nth-child(3) { transform: rotateY(20deg) translateZ(30px); } /* Right image tilt with depth */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px) rotateX(-10deg); }
+            to { opacity: 1; transform: translateY(0) rotateX(0deg); }
+        }
+        @keyframes pulseGlow {
+            from { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 10px #f57f17; }
+            to { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 20px #f57f17; }
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        /* Enhanced particle background with color animation */
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particles 4s linear infinite, particleColorShift 4s infinite alternate ease-in-out;
+            z-index: 1;
+            box-shadow: 0 0 5px currentColor;
+        }
+        @keyframes particles {
+            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+            50% { transform: translateY(-50vh) rotate(180deg) scale(1.5); opacity: 0.5; }
+            100% { transform: translateY(-100vh) rotate(360deg) scale(0.5); opacity: 0; }
+        }
+        @keyframes particleColorShift {
+            0% { background-color: #f57f17; color: #f57f17; }
+            33% { background-color: #d32f2f; color: #d32f2f; }
+            66% { background-color: #ffd700; color: #ffd700; }
+            100% { background-color: #00ffcc; color: #00ffcc; }
+        }
+        /* Mouse trail styles for fun with color animation */
+        .trail {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.9;
+            box-shadow: 0 0 15px currentColor, 0 0 25px currentColor, inset 0 0 10px #ffd700; /* Dynamic glow */
+            z-index: 1000;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            animation: trailPulse 0.5s infinite alternate, trailColorShift 3s infinite alternate ease-in-out;
+        }
+        @keyframes trailPulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.2); }
+        }
+        @keyframes trailColorShift {
+            0% { background: radial-gradient(circle, #f57f17, #d32f2f); color: #f57f17; }
+            33% { background: radial-gradient(circle, #d32f2f, #ffd700); color: #d32f2f; }
+            66% { background: radial-gradient(circle, #ffd700, #00ffcc); color: #ffd700; }
+            100% { background: radial-gradient(circle, #00ffcc, #81d4fa); color: #00ffcc; }
+        }
+        @media (max-width: 768px) {
+            ul { flex-direction: column; }
+            li { width: 90%; margin: 15px auto; }
+            .preview-container { flex-direction: column; }
+            .preview-img { margin: 10px 0; transform: none !important; } /* Flatten 3D on mobile */
+        }
     </style>
 </head>
 <body>
-    <h1>My Custom 2026 Calendars</h1>
+    <h1>Tifa Calendar By Nomms</h1>
+    <div class="preview-container">
+        <img src="https://i.gyazo.com/0f2396abcd1ab1d7c294eaccaaf7ebd8.png" alt="January Preview" class="preview-img">
+        <img src="https://i.gyazo.com/f24a2bcbe99237fb4f99d076c3d3ea6d.png" alt="February Preview" class="preview-img">
+        <img src="https://i.gyazo.com/3bce5dbd28ff5c7e58e0a4ab852cd421.png" alt="March Preview" class="preview-img">
+    </div>
     <ul>
-        <li><a href="january.html">January</a></li>
-        <li><a href="february.html">February</a></li>
-        <li><a href="march.html">March</a></li>
+        <li><a href="january.html"><span class="month-icon">❄️</span>January</a></li>
+        <li><a href="february.html"><span class="month-icon">🏮</span>February</a></li>
+        <li><a href="march.html"><span class="month-icon">💪</span>March</a></li>
     </ul>
+
+    <script>
+        // Mouse trail script (color animation handled in CSS)
+        const trailArray = [];
+        const maxTrail = 40; // More trails for denser effect
+        for (let i = 0; i < maxTrail; i++) {
+            const div = document.createElement('div');
+            div.className = 'trail';
+            document.body.appendChild(div);
+            trailArray.push(div);
+        }
+        let trailIndex = 0;
+        document.addEventListener('mousemove', (e) => {
+            const div = trailArray[trailIndex];
+            div.style.left = (e.pageX + Math.random() * 10 - 5) + 'px'; // Slight random offset for interest
+            div.style.top = (e.pageY + Math.random() * 10 - 5) + 'px';
+            div.style.opacity = 1;
+            trailIndex = (trailIndex + 1) % maxTrail;
+            trailArray.forEach((trail, index) => {
+                if (index !== trailIndex) {
+                    trail.style.opacity -= 0.02; // Even slower fade
+                    if (trail.style.opacity <= 0) trail.style.opacity = 0;
+                }
+            });
+        });
+
+        // Particle effect (color animation handled in CSS)
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * window.innerWidth + 'px';
+            particle.style.top = window.innerHeight + 'px';
+            particle.style.animationDuration = Math.random() * 3 + 1.5 + 's'; // Varied speed
+            document.body.appendChild(particle);
+            setTimeout(() => {
+                particle.remove();
+            }, 4000);
+        }
+        setInterval(createParticle, 100); // More frequent particles
+    </script>
 </body>
 </html>
