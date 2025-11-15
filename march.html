@@ -88,9 +88,12 @@
             font-size: 16px;
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 8px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, text-shadow 0.3s ease;
             color: #ffffff; /* White for better standout */
             text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; /* Black outline retained for depth */
+            cursor: pointer; /* Make dates look clickable */
+            vertical-align: top; /* Align content to top for better note display */
+            min-height: 60px; /* Ensure space for notes */
         }
         .calendar-table th {
             background-color: #6d4c41; /* Dark brown for headers */
@@ -99,10 +102,29 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             text-shadow: none; /* No outline on headers */
+            cursor: default; /* Headers not clickable */
         }
         .calendar-table td:hover {
             background-color: rgba(255, 255, 255, 1);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-shadow: 0 0 10px #f57f17, 0 0 20px #f57f17, 0 0 30px #f57f17; /* Orange glow effect for lighting up */
+        }
+        .calendar-table td.clicked {
+            animation: pulse 0.5s ease-in-out;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 rgba(245, 127, 23, 0.7);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 20px rgba(245, 127, 23, 0.7);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 rgba(245, 127, 23, 0.7);
+            }
         }
         .weekend {
             color: #ffffff; /* White for weekends too */
@@ -110,6 +132,13 @@
         .dumbbell {
             font-size: 12px;
             color: #f57f17; /* Orange for dumbbells */
+        }
+        .note {
+            display: block;
+            font-size: 12px;
+            color: #f57f17; /* Orange for notes */
+            text-shadow: none; /* No outline for notes */
+            word-wrap: break-word; /* Ensure long notes wrap */
         }
         /* Modal for zoom */
         .modal {
@@ -128,6 +157,14 @@
         .modal img {
             max-width: 90%;
             max-height: 90%;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 400px;
+            width: 80%;
         }
         .close {
             position: absolute;
@@ -189,47 +226,47 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td class="weekend">1 <span class="dumbbell">🏋️</span></td>
+                        <td class="weekend" data-day="1">1 <span class="dumbbell">🏋️</span></td>
                     </tr>
                     <tr>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td>6</td>
-                        <td class="weekend">7</td>
-                        <td class="weekend">8</td>
+                        <td data-day="2">2</td>
+                        <td data-day="3">3</td>
+                        <td data-day="4">4</td>
+                        <td data-day="5">5</td>
+                        <td data-day="6">6</td>
+                        <td class="weekend" data-day="7">7</td>
+                        <td class="weekend" data-day="8">8</td>
                     </tr>
                     <tr>
-                        <td>9</td>
-                        <td>10</td>
-                        <td>11</td>
-                        <td>12</td>
-                        <td>13</td>
-                        <td class="weekend">14</td>
-                        <td class="weekend">15</td>
+                        <td data-day="9">9</td>
+                        <td data-day="10">10</td>
+                        <td data-day="11">11</td>
+                        <td data-day="12">12</td>
+                        <td data-day="13">13</td>
+                        <td class="weekend" data-day="14">14</td>
+                        <td class="weekend" data-day="15">15</td>
                     </tr>
                     <tr>
-                        <td>16</td>
-                        <td>17</td>
-                        <td>18</td>
-                        <td>19</td>
-                        <td>20</td>
-                        <td class="weekend">21</td>
-                        <td class="weekend">22</td>
+                        <td data-day="16">16</td>
+                        <td data-day="17">17</td>
+                        <td data-day="18">18</td>
+                        <td data-day="19">19</td>
+                        <td data-day="20">20</td>
+                        <td class="weekend" data-day="21">21</td>
+                        <td class="weekend" data-day="22">22</td>
                     </tr>
                     <tr>
-                        <td>23</td>
-                        <td>24</td>
-                        <td>25</td>
-                        <td>26</td>
-                        <td>27</td>
-                        <td class="weekend">28</td>
-                        <td class="weekend">29</td>
+                        <td data-day="23">23</td>
+                        <td data-day="24">24</td>
+                        <td data-day="25">25</td>
+                        <td data-day="26">26</td>
+                        <td data-day="27">27</td>
+                        <td class="weekend" data-day="28">28</td>
+                        <td class="weekend" data-day="29">29</td>
                     </tr>
                     <tr>
-                        <td>30</td>
-                        <td>31</td>
+                        <td data-day="30">30</td>
+                        <td data-day="31">31</td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -241,10 +278,20 @@
         </div>
     </div>
 
-    <!-- Modal structure -->
+    <!-- Modal for image zoom -->
     <div id="imageModal" class="modal" onclick="closeModal()">
         <span class="close" onclick="closeModal()">&times;</span>
         <img id="modalImage" src="" alt="Zoomed Image">
+    </div>
+
+    <!-- Modal for note entry -->
+    <div id="noteModal" class="modal" onclick="closeNoteModal()">
+        <div class="modal-content" onclick="event.stopPropagation();">
+            <span class="close" onclick="closeNoteModal()">&times;</span>
+            <h2>Enter Note for Day <span id="noteDay"></span></h2>
+            <input type="text" id="noteInput" style="width:100%;">
+            <button onclick="saveNote()">Save</button>
+        </div>
     </div>
 
     <script>
@@ -254,6 +301,21 @@
         }
         function closeModal() {
             document.getElementById('imageModal').style.display = 'none';
+        }
+        function closeNoteModal() {
+            document.getElementById('noteModal').style.display = 'none';
+        }
+        let currentDay;
+        function saveNote() {
+            const newNote = document.getElementById('noteInput').value.trim();
+            notes[currentDay] = newNote;
+            if (newNote === '') {
+                delete notes[currentDay];
+            }
+            localStorage.setItem(storageKey, JSON.stringify(notes));
+            const td = document.querySelector(`.calendar-table td[data-day="${currentDay}"]`);
+            updateNoteDisplay(td, notes[currentDay]);
+            closeNoteModal();
         }
         // Mouse trail script
         const trailArray = [];
@@ -276,6 +338,55 @@
                     trail.style.opacity -= 0.05;
                     if (trail.style.opacity <= 0) trail.style.opacity = 0;
                 }
+            });
+        });
+        // Persistent notes with localStorage
+        const storageKey = 'march2026Notes';
+        let notes = JSON.parse(localStorage.getItem(storageKey)) || {};
+
+        // Function to add or update note display
+        function updateNoteDisplay(td, noteText) {
+            let br = td.querySelector('br');
+            let noteSpan = td.querySelector('.note');
+            if (noteText) {
+                if (!br) {
+                    br = document.createElement('br');
+                    td.appendChild(br);
+                }
+                if (!noteSpan) {
+                    noteSpan = document.createElement('span');
+                    noteSpan.className = 'note';
+                    td.appendChild(noteSpan);
+                }
+                noteSpan.innerText = noteText;
+            } else {
+                if (br) br.remove();
+                if (noteSpan) noteSpan.remove();
+            }
+        }
+
+        // Load existing notes
+        document.querySelectorAll('.calendar-table td[data-day]').forEach(td => {
+            const day = td.dataset.day;
+            if (notes[day]) {
+                updateNoteDisplay(td, notes[day]);
+            }
+        });
+
+        // Click effect and note editing
+        document.querySelectorAll('.calendar-table td[data-day]').forEach(td => {
+            td.addEventListener('click', () => {
+                td.classList.add('clicked');
+                setTimeout(() => {
+                    td.classList.remove('clicked');
+                }, 500);
+
+                // Open note modal
+                currentDay = td.dataset.day;
+                const currentNote = notes[currentDay] || '';
+                document.getElementById('noteDay').innerText = currentDay;
+                document.getElementById('noteInput').value = currentNote;
+                document.getElementById('noteModal').style.display = 'flex';
             });
         });
     </script>
