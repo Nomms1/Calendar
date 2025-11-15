@@ -145,6 +145,19 @@
                 width: 100%;
             }
         }
+        /* Mouse trail styles */
+        .trail {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #00ffcc; /* Mako green-blue from FF7 */
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.8;
+            box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc; /* Glowing effect */
+            z-index: 1000;
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
     </style>
 </head>
 <body>
@@ -232,6 +245,29 @@
         function closeModal() {
             document.getElementById('imageModal').style.display = 'none';
         }
+        // Mouse trail script
+        const trailArray = [];
+        const maxTrail = 20; // Number of trail elements
+        for (let i = 0; i < maxTrail; i++) {
+            const div = document.createElement('div');
+            div.className = 'trail';
+            document.body.appendChild(div);
+            trailArray.push(div);
+        }
+        let trailIndex = 0;
+        document.addEventListener('mousemove', (e) => {
+            const div = trailArray[trailIndex];
+            div.style.left = e.pageX + 'px';
+            div.style.top = e.pageY + 'px';
+            div.style.opacity = 1;
+            trailIndex = (trailIndex + 1) % maxTrail;
+            trailArray.forEach((trail, index) => {
+                if (index !== trailIndex) {
+                    trail.style.opacity -= 0.05;
+                    if (trail.style.opacity <= 0) trail.style.opacity = 0;
+                }
+            });
+        });
     </script>
 </body>
 </html>
