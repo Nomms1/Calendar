@@ -32,12 +32,35 @@
                 0 0 64px #00ffff, 
                 0 0 80px #00ffff; /* Reduced glow radius */
             margin-bottom: 40px;
-            animation: fadeIn 1s ease-in-out; /* Keep fadeIn */
+            animation: fadeIn 1s ease-in-out, neonFlicker 2s infinite alternate ease-in-out; /* Slower flicker for realism */
             transform-style: preserve-3d;
             position: relative; /* Ensure it sits still */
             transform: none; /* No rotation or movement */
             letter-spacing: 1px; /* Slight spacing for tube effect */
-            cursor: pointer; /* Indicate interactivity */
+        }
+        @keyframes neonFlicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 
+                    0 0 4px #00ffcc, 
+                    0 0 8px #00ffcc, 
+                    0 0 16px #00ffcc, 
+                    0 0 32px #00ffff, 
+                    0 0 48px #00ffff, 
+                    0 0 64px #00ffff, 
+                    0 0 80px #00ffff;
+                opacity: 1;
+            }
+            20%, 24%, 55% {
+                text-shadow: 
+                    0 0 2px #00ffcc, 
+                    0 0 4px #00ffcc, 
+                    0 0 8px #00ffcc, 
+                    0 0 16px #00ffff, 
+                    0 0 24px #00ffff, 
+                    0 0 32px #00ffff, 
+                    0 0 40px #00ffff;
+                opacity: 0.9;
+            }
         }
         ul {
             list-style: none;
@@ -122,6 +145,7 @@
             .preview-img { margin: 10px 0; transform: none !important; }
         }
     </style>
+    <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
     <h1>Tifa Calendar By Nomms</h1>
@@ -135,76 +159,33 @@
         <li><a href="february.html"><span class="month-icon">🏮</span>February</a></li>
         <li><a href="march.html"><span class="month-icon">💪</span>March</a></li>
     </ul>
-    <audio id="neonSound" autoplay loop>
-        <source src="https://orangefreesounds.com/wp-content/uploads/2025/07/Neon-light-buzzing-sound-effect.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
-    <audio id="turnOffSound">
-        <source src="https://orangefreesounds.com/wp-content/uploads/2025/01/Neon-flickering-sound-effect.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+    <div id="player" style="display: none;"></div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var neonSound = document.getElementById('neonSound');
-            var turnOffSound = document.getElementById('turnOffSound');
-            neonSound.volume = 0.2;
-            turnOffSound.volume = 0.2;
-
-            var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            var source = audioCtx.createMediaElementSource(neonSound); // Only analyze neonSound
-            var analyser = audioCtx.createAnalyser();
-            analyser.fftSize = 256;
-            source.connect(analyser);
-            analyser.connect(audioCtx.destination);
-
-            var h1 = document.querySelector('h1');
-            var fullGlow = '0 0 4px #00ffcc, 0 0 8px #00ffcc, 0 0 16px #00ffcc, 0 0 32px #00ffff, 0 0 48px #00ffff, 0 0 64px #00ffff, 0 0 80px #00ffff';
-            var noGlow = 'none';
-            var isOff = false;
-
-            h1.addEventListener('mouseover', function() {
-                if (!isOff) {
-                    neonSound.pause();
-                    turnOffSound.play();
-                    h1.style.textShadow = noGlow;
-                    isOff = true;
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '0',
+                width: '0',
+                videoId: 'j1mOLmb_J2U',
+                playerVars: {
+                    'playsinline': 1,
+                    'autoplay': 1,
+                    'loop': 1,
+                    'playlist': 'j1mOLmb_J2U',
+                    'controls': 0,
+                    'modestbranding': 1,
+                    'rel': 0,
+                    'showinfo': 0
+                },
+                events: {
+                    'onReady': onPlayerReady
                 }
             });
-
-            h1.addEventListener('mouseout', function() {
-                if (isOff) {
-                    h1.style.textShadow = fullGlow;
-                    neonSound.play();
-                    isOff = false;
-                }
-            });
-
-            function updateGlow() {
-                if (isOff) {
-                    h1.style.textShadow = noGlow;
-                } else {
-                    var dataArray = new Uint8Array(analyser.frequencyBinCount);
-                    analyser.getByteFrequencyData(dataArray);
-                    var average = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
-
-                    var threshold = 30; // Adjust as needed
-                    if (average < threshold) {
-                        h1.style.textShadow = noGlow;
-                    } else {
-                        h1.style.textShadow = fullGlow;
-                    }
-                }
-                requestAnimationFrame(updateGlow);
-            }
-
-            // Start the loop once neonSound is playing
-            neonSound.addEventListener('play', function() {
-                if (audioCtx.state === 'suspended') {
-                    audioCtx.resume();
-                }
-                updateGlow();
-            });
-        });
+        }
+        function onPlayerReady(event) {
+            event.target.setVolume(20); // Low volume (0-100 scale)
+            event.target.playVideo();
+        }
     </script>
 </body>
 </html>
