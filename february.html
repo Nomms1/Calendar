@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>february 2026 Calendar</title>
+    <title>February 2026 Calendar</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -55,6 +55,7 @@
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s ease;
+            cursor: pointer; /* Indicate clickable */
         }
         .image-section img:hover {
             transform: scale(1.05);
@@ -109,6 +110,33 @@
             font-size: 12px;
             color: #ffca28; /* Brighter gold for lanterns */
         }
+        /* Modal for zoom */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
         @media (max-width: 768px) {
             .calendar-container {
                 flex-direction: column;
@@ -123,7 +151,7 @@
     <div class="calendar-container">
         <div class="watermark">🏮 🏮 🏮</div> <!-- Watermarks with lanterns -->
         <div class="image-section">
-            <img src="https://i.gyazo.com/f24a2bcbe99237fb4f99d076c3d3ea6d.png" alt="Your Custom February Image">
+            <img src="https://i.gyazo.com/f24a2bcbe99237fb4f99d076c3d3ea6d.png" alt="Your Custom February Image" onclick="openModal(this.src)">
         </div>
         <div class="calendar-section">
             <h2 class="month-title">February 2026 🏮</h2>
@@ -189,6 +217,21 @@
             </table>
         </div>
     </div>
+
+    <!-- Modal structure -->
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img id="modalImage" src="" alt="Zoomed Image">
+    </div>
+
+    <script>
+        function openModal(src) {
+            document.getElementById('modalImage').src = src;
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
-
