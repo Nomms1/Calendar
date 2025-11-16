@@ -3,25 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>March 2026 Calendar</title>
+<title>February 2026 Calendar</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #efebe9;
+    background-color: #d32f2f; /* Red background for Chinese New Year theme */
     margin: 0;
     padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    cursor: url('https://www.kindpng.com/picc/m/106-1065956_buster-sword-png-final-fantasy-7-buster-sword.png') 0 32, auto;
 }
 .calendar-container {
     display: flex;
     max-width: 1200px;
     width: 100%;
-    background: linear-gradient(135deg, #6d4c41 0%, #d7ccc8 100%);
+    background: linear-gradient(135deg, #c62828 0%, #ffca28 100%);
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -42,7 +41,7 @@ body {
 }
 .image-section {
     width: 50%;
-    background-color: rgba(239,235,233,0.8);
+    background-color: rgba(255,243,224,0.8);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -58,7 +57,9 @@ body {
     transition: transform 0.3s ease;
     cursor: pointer;
 }
-.image-section img:hover { transform: scale(1.05); }
+.image-section img:hover {
+    transform: scale(1.05);
+}
 .calendar-section {
     width: 50%;
     padding: 30px;
@@ -68,7 +69,7 @@ body {
 .month-title {
     text-align: center;
     font-size: 28px;
-    color: #f57f17;
+    color: #ffd700;
     margin-bottom: 10px;
     font-weight: 700;
     text-transform: uppercase;
@@ -76,9 +77,9 @@ body {
 }
 #playGameButton {
     display: block;
-    margin: 10px auto 20px auto;
+    margin: 10px auto 20px;
     padding: 12px 20px;
-    background-color: #f57f17;
+    background-color: #ffb74d;
     color: white;
     border: none;
     border-radius: 8px;
@@ -109,28 +110,26 @@ body {
     min-height: 60px;
 }
 .calendar-table th {
-    background-color: #6d4c41;
+    background-color: #c62828;
     color: #fff;
     font-weight: 400;
 }
 .calendar-table td:hover {
     background-color: rgba(255,255,255,1);
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    text-shadow: 0 0 10px #f57f17, 0 0 20px #f57f17;
+    text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
 }
-.weekend { color: #ffffff; }
-.dumbbell { font-size: 12px; color: #f57f17; }
-.note { display:block; font-size:12px; color:#f57f17; word-wrap: break-word; }
-.modal { display:none; position: fixed; z-index: 1000; left:0;top:0;width:100%;height:100%;overflow:auto;background-color: rgba(0,0,0,0.9); justify-content:center; align-items:center; }
+.weekend { color: #ffd700; }
+.lantern { font-size: 12px; color: #ffca28; }
+.note { display: block; font-size: 12px; color: #ffd700; text-shadow: -1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000; word-wrap: break-word; }
+.modal { display: none; position: fixed; z-index: 1000; left:0;top:0;width:100%;height:100%;overflow:auto;background-color: rgba(0,0,0,0.9); justify-content:center; align-items:center; }
 .modal img { max-width: 90%; max-height: 90%; border-radius:15px; }
 .modal-content { background-color:#fff; padding:20px; border-radius:10px; text-align:center; max-width:400px; width:80%; }
 .close { position:absolute; top:15px; right:35px; color:#f1f1f1; font-size:40px; font-weight:bold; cursor:pointer; }
 @media (max-width:768px){ .calendar-container { flex-direction: column; } .image-section,.calendar-section { width:100%; } }
-
 /* Mouse trail */
 .trail { position:absolute; width:8px; height:8px; background-color:#00ffcc; border-radius:50%; pointer-events:none; opacity:0.8; box-shadow:0 0 10px #00ffcc,0 0 20px #00ffcc; z-index:1000; transition:opacity 0.5s ease-out, transform 0.5s ease-out; }
-
-/* Mini-game overlay */
+/* Mini-game styles */
 #miniGameOverlay {
     display:none;
     position:fixed;
@@ -140,31 +139,38 @@ body {
     padding:40px;
     text-align:center;
     z-index:2000;
-    overflow:auto;
 }
-#instructionText {
-    margin-bottom:20px;
-    font-size:18px;
+#balloonContainer {
+    display:flex;
+    flex-wrap: wrap;
+    justify-content:center;
+    margin-top:20px;
+    gap: 15px;
 }
-#ballContainer {
+.balloon {
+    width: 80px;
+    height: 100px;
+    background: radial-gradient(circle at 50% 30%, #ff5252 40%, #b71c1c 100%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     position: relative;
-    width: 100%;
-    height: 300px;
-    margin: auto;
+    cursor: pointer;
+    transition: transform 0.2s ease;
 }
-.ball {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background:white;
-    position: absolute;
-    cursor:pointer;
+.balloon::after {
+    content:'';
+    position:absolute;
+    bottom:-20px;
+    left:50%;
+    width:2px;
+    height:20px;
+    background:#555;
+    transform:translateX(-50%);
 }
 #secretReward {
     display:none;
     margin-top:20px;
-    width: 588px;
-    height: 849px;
+    width:588px;
+    height:849px;
     border-radius:15px;
     box-shadow:0 5px 15px rgba(0,0,0,0.3);
     transition: transform 0.3s ease;
@@ -175,27 +181,26 @@ body {
 </style>
 </head>
 <body>
-
 <div class="calendar-container">
-    <div class="watermark">🏋️ 🏋️ 🏋️</div>
+    <div class="watermark">🏮 🏮 🏮</div>
     <div class="image-section">
-        <img src="https://i.gyazo.com/3bce5dbd28ff5c7e58e0a4ab852cd421.png" alt="March Image" onclick="openModal(this.src)">
+        <img src="https://i.gyazo.com/f24a2bcbe99237fb4f99d076c3d3ea6d.png" alt="February Image" onclick="openModal(this.src)">
     </div>
     <div class="calendar-section">
-        <h2 class="month-title">March 2026 💪</h2>
-        <button id="playGameButton" onclick="startMiniGame()">Play March Mini Game</button>
-        <span style="display:block;text-align:center;margin-top:5px;">Click the white dots to reveal the secret image</span>
+        <h2 class="month-title">February 2026 🏮</h2>
+        <button id="playGameButton" onclick="startMiniGame()">Play February Mini-Game 🎈</button>
         <table class="calendar-table">
             <thead>
-                <tr><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th class="weekend">Sat</th><th class="weekend">Sun</th></tr>
+                <tr>
+                    <th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th class="weekend">Sat</th><th class="weekend">Sun</th>
+                </tr>
             </thead>
             <tbody>
-                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td class="weekend" data-day="1">1 <span class="dumbbell">🏋️</span></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td class="weekend" data-day="1">1 <span class="lantern">🏮</span></td></tr>
                 <tr><td data-day="2">2</td><td data-day="3">3</td><td data-day="4">4</td><td data-day="5">5</td><td data-day="6">6</td><td class="weekend" data-day="7">7</td><td class="weekend" data-day="8">8</td></tr>
                 <tr><td data-day="9">9</td><td data-day="10">10</td><td data-day="11">11</td><td data-day="12">12</td><td data-day="13">13</td><td class="weekend" data-day="14">14</td><td class="weekend" data-day="15">15</td></tr>
                 <tr><td data-day="16">16</td><td data-day="17">17</td><td data-day="18">18</td><td data-day="19">19</td><td data-day="20">20</td><td class="weekend" data-day="21">21</td><td class="weekend" data-day="22">22</td></tr>
-                <tr><td data-day="23">23</td><td data-day="24">24</td><td data-day="25">25</td><td data-day="26">26</td><td data-day="27">27</td><td class="weekend" data-day="28">28</td><td class="weekend" data-day="29">29</td></tr>
-                <tr><td data-day="30">30</td><td data-day="31">31</td><td></td><td></td><td></td><td class="weekend"></td><td class="weekend"></td></tr>
+                <tr><td data-day="23">23</td><td data-day="24">24</td><td data-day="25">25</td><td data-day="26">26</td><td data-day="27">27</td><td class="weekend" data-day="28">28</td><td class="weekend"></td></tr>
             </tbody>
         </table>
     </div>
@@ -203,8 +208,8 @@ body {
 
 <!-- Image modal -->
 <div id="imageModal" class="modal" onclick="closeModal()">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <img id="modalImage" src="">
+<span class="close" onclick="closeModal()">&times;</span>
+<img id="modalImage" src="">
 </div>
 
 <!-- Note modal -->
@@ -217,13 +222,14 @@ body {
 </div>
 </div>
 
-<!-- Mini-game overlay -->
+<!-- February Mini-Game -->
 <div id="miniGameOverlay">
-    <h1>March Mini Game 💪</h1>
-    <p id="instructionText">Click the white dots before they turn black to reveal the secret image!</p>
-    <div id="ballContainer"></div>
-    <img id="secretReward" src="https://i.gyazo.com/c0e07101388fe5d55b2bf98bcd90d94a.png" alt="Secret Image">
-    <button onclick="closeMiniGame()" style="margin-top:20px;">Close</button>
+<h1>February Mini-Game 🎈</h1>
+<p>Pop <b>5 balloons</b> to unlock the secret image!</p>
+<p>Popped: <span id="popCounter">0</span>/5</p>
+<div id="balloonContainer"></div>
+<img id="secretReward" src="https://i.gyazo.com/edbbcad169c5fce01f4519f036d56593.png" alt="Secret Reward">
+<button onclick="closeMiniGame()">Close</button>
 </div>
 
 <script>
@@ -233,7 +239,7 @@ function closeModal(){ document.getElementById('imageModal').style.display='none
 
 // Notes
 let currentDay;
-const storageKey='march2026Notes';
+const storageKey='february2026Notes';
 let notes=JSON.parse(localStorage.getItem(storageKey))||{};
 function saveNote(){
     const val=document.getElementById('noteInput').value.trim();
@@ -245,10 +251,14 @@ function saveNote(){
 }
 function closeNoteModal(){ document.getElementById('noteModal').style.display='none'; }
 function updateNoteDisplay(td,note){
-    let span=td.querySelector('.note');
-    if(note){ if(!span){ span=document.createElement('span'); span.className='note'; td.appendChild(span); } span.innerText=note; }
-    else if(span) span.remove();
+    let br=td.querySelector('br'); let span=td.querySelector('.note');
+    if(note){
+        if(!br){ br=document.createElement('br'); td.appendChild(br); }
+        if(!span){ span=document.createElement('span'); span.className='note'; td.appendChild(span); }
+        span.innerText=note;
+    } else { if(br) br.remove(); if(span) span.remove(); }
 }
+// Load notes
 document.querySelectorAll('.calendar-table td[data-day]').forEach(td=>{
     const day=td.dataset.day;
     if(notes[day]) updateNoteDisplay(td,notes[day]);
@@ -263,38 +273,32 @@ document.querySelectorAll('.calendar-table td[data-day]').forEach(td=>{
 
 // Mouse trail
 const trail=[]; for(let i=0;i<20;i++){ let d=document.createElement('div'); d.className='trail'; document.body.appendChild(d); trail.push(d);}
-let ti=0; document.addEventListener('mousemove',e=>{ let d=trail[ti]; d.style.left=e.pageX+'px'; d.style.top=e.pageY+'px'; d.style.opacity=1; ti=(ti+1)%20; trail.forEach((t,i)=>{ if(i!==ti){ t.style.opacity-=0.05; if(t.style.opacity<0) t.style.opacity=0; }}); });
+let ti=0; document.addEventListener('mousemove',e=>{
+    let d=trail[ti]; d.style.left=e.pageX+'px'; d.style.top=e.pageY+'px'; d.style.opacity=1; ti=(ti+1)%20;
+    trail.forEach((t,i)=>{ if(i!==ti){ t.style.opacity-=0.05; if(t.style.opacity<0) t.style.opacity=0; }});
+});
 
 // Mini-game
+let pops=0; const maxPops=5;
 function startMiniGame(){
-    const overlay=document.getElementById('miniGameOverlay');
-    const container=document.getElementById('ballContainer');
+    pops=0; document.getElementById('popCounter').innerText=pops;
+    document.getElementById('secretReward').style.display='none';
+    const container=document.getElementById('balloonContainer');
     container.innerHTML='';
-    const secret=document.getElementById('secretReward'); secret.style.display='none';
-    overlay.style.display='block';
-
-    const balls=[]; const totalBalls=6; let clickedBalls=0;
-
-    for(let i=0;i<totalBalls;i++){
-        const ball=document.createElement('div'); ball.className='ball';
-        ball.style.top=Math.random()*(container.clientHeight-40)+'px';
-        ball.style.left=Math.random()*(container.clientWidth-40)+'px';
-        ball.isWhite=true; ball.clicked=false;
-        container.appendChild(ball);
-        balls.push(ball);
-
-        // Turn black and revert
-        setInterval(()=>{ 
-            if(ball.isWhite && !ball.clicked){ ball.style.backgroundColor='black'; ball.isWhite=false; 
-                setTimeout(()=>{ if(!ball.clicked){ ball.style.backgroundColor='white'; ball.isWhite=true; }},1200); 
-            }
-        },2500);
-
-        ball.addEventListener('click',()=>{
-            if(ball.isWhite && !ball.clicked){ ball.clicked=true; ball.style.display='none'; clickedBalls++;
-                if(clickedBalls===totalBalls){ secret.style.display='block'; secret.classList.add('fade-in'); }
-            }
-        });
+    for(let i=0;i<maxPops;i++){
+        const b=document.createElement('div');
+        b.className='balloon';
+        b.style.transform=`translate(${Math.random()*200-100}px,${Math.random()*100}px)`;
+        b.onclick=function(){ popBalloon(this); };
+        container.appendChild(b);
+    }
+    document.getElementById('miniGameOverlay').style.display='block';
+}
+function popBalloon(b){
+    b.style.transform='scale(0)'; b.style.opacity=0; pops++; document.getElementById('popCounter').innerText=pops;
+    if(pops>=maxPops){
+        const reward=document.getElementById('secretReward');
+        reward.style.display='block'; reward.classList.add('fade-in');
     }
 }
 function closeMiniGame(){ document.getElementById('miniGameOverlay').style.display='none'; }
