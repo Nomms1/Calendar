@@ -1,283 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>March 2026 Calendar</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-<style>
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #efebe9;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-.calendar-container {
-    display: flex;
-    max-width: 1200px;
-    width: 100%;
-    background: linear-gradient(135deg, #6d4c41 0%, #d7ccc8 100%);
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    position: relative;
-}
-.watermark {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 200px;
-    color: rgba(255,255,255,0.1);
-    font-weight: 700;
-    pointer-events: none;
-    z-index: 1;
-    user-select: none;
-    white-space: nowrap;
-}
-.image-section {
-    width: 50%;
-    background-color: rgba(239,235,233,0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 30px;
-    position: relative;
-    z-index: 2;
-    overflow: hidden;
-}
-.image-section img {
-    max-width: 100%;
-    max-height: 100%;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-    transition: transform 0.3s ease;
-    cursor: pointer;
-}
-.image-section img:hover {
-    transform: scale(1.05);
-}
-.calendar-section {
-    width: 50%;
-    padding: 30px;
-    position: relative;
-    z-index: 2;
-}
-.month-title {
-    text-align: center;
-    font-size: 28px;
-    color: #f57f17;
-    margin-bottom: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-#playGameBtn {
-    display: block;
-    margin: 0 auto 20px auto;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #fff;
-    border: 2px solid #f57f17;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 700;
-}
-#playGameBtn:hover {
-    background-color: #f57f17;
-    color: #fff;
-}
-.calendar-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 5px;
-}
-.calendar-table th, .calendar-table td {
-    border: none;
-    padding: 12px;
-    text-align: center;
-    font-size: 16px;
-    background-color: rgba(255,255,255,0.8);
-    border-radius: 8px;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease, text-shadow 0.3s ease;
-    color: #ffffff;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-    cursor: pointer;
-    vertical-align: top;
-    min-height: 60px;
-}
-.calendar-table th {
-    background-color: #6d4c41;
-    color: #fff;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    text-shadow: none;
-    cursor: default;
-}
-.calendar-table td:hover {
-    background-color: rgba(255,255,255,1);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    text-shadow: 0 0 10px #f57f17, 0 0 20px #f57f17, 0 0 30px #f57f17;
-}
-.calendar-table td.clicked {
-    animation: pulse 0.5s ease-in-out;
-}
-@keyframes pulse {
-    0% { transform: scale(1); box-shadow:0 0 0 rgba(245,127,23,0.7); }
-    50% { transform: scale(1.1); box-shadow:0 0 20px rgba(245,127,23,0.7); }
-    100% { transform: scale(1); box-shadow:0 0 0 rgba(245,127,23,0.7); }
-}
-.weekend { color: #ffffff; }
-.dumbbell { font-size: 12px; color: #f57f17; }
-.note { display:block; font-size:12px; color:#f57f17; word-wrap:break-word; }
-.modal { display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; overflow:auto; background-color: rgba(0,0,0,0.9); justify-content:center; align-items:center; }
-.modal img { max-width: 90%; max-height: 90%; }
-.modal-content { background-color:#fff; padding:20px; border-radius:10px; text-align:center; max-width:400px; width:80%; }
-.close { position:absolute; top:15px; right:35px; color:#f1f1f1; font-size:40px; font-weight:bold; cursor:pointer; }
-@media (max-width:768px) { .calendar-container { flex-direction: column; } .image-section, .calendar-section { width:100%; } }
-/* Mouse trail */
-.trail { position:absolute; width:8px; height:8px; background-color:#00ffcc; border-radius:50%; pointer-events:none; opacity:0.8; box-shadow:0 0 10px #00ffcc, 0 0 20px #00ffcc; z-index:1000; transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>March 2026 Calendar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #efebe9; 
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            cursor: url('https://www.kindpng.com/picc/m/106-1065956_buster-sword-png-final-fantasy-7-buster-sword.png') 0 32, auto;
+        }
+        .calendar-container {
+            display: flex;
+            max-width: 1200px;
+            width: 100%;
+            background: linear-gradient(135deg, #6d4c41 0%, #d7ccc8 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 200px;
+            color: rgba(255, 255, 255, 0.1);
+            font-weight: 700;
+            pointer-events: none;
+            z-index: 1;
+            user-select: none;
+            white-space: nowrap;
+        }
+        .image-section {
+            width: 50%;
+            background-color: rgba(239,235,233,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        .image-section img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        .image-section img:hover { transform: scale(1.05); }
+        .calendar-section {
+            width: 50%;
+            padding: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        .month-title {
+            text-align: center;
+            font-size: 28px;
+            color: #f57f17;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .play-game-btn {
+            display: block;
+            margin: 0 auto 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #f57f17;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        .play-game-btn:hover { background-color: #ff9800; }
+        .game-box {
+            width: 100%;
+            height: 250px;
+            background-color: #fff;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 15px;
+            display: none; /* Hidden initially */
+            border: 2px solid #6d4c41;
+        }
+        .calendar-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 5px;
+        }
+        .calendar-table th, .calendar-table td {
+            border: none;
+            padding: 12px;
+            text-align: center;
+            font-size: 16px;
+            background-color: rgba(255,255,255,0.8);
+            border-radius: 8px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, text-shadow 0.3s ease;
+            color: #ffffff;
+            text-shadow: -1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;
+            cursor: pointer;
+            vertical-align: top;
+            min-height: 60px;
+        }
+        .calendar-table th {
+            background-color: #6d4c41;
+            color: #fff;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-shadow: none;
+            cursor: default;
+        }
+        .calendar-table td:hover {
+            background-color: rgba(255,255,255,1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-shadow: 0 0 10px #f57f17,0 0 20px #f57f17,0 0 30px #f57f17;
+        }
+        .calendar-table td.clicked { animation: pulse 0.5s ease-in-out; }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 rgba(245,127,23,0.7); }
+            50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(245,127,23,0.7); }
+            100% { transform: scale(1); box-shadow: 0 0 0 rgba(245,127,23,0.7); }
+        }
+        .weekend { color: #fff; }
+        .dumbbell { font-size: 12px; color: #f57f17; }
+        .note { display: block; font-size: 12px; color: #f57f17; word-wrap: break-word; }
+        .modal { display:none; position: fixed; z-index: 1000; left:0; top:0; width:100%; height:100%; overflow:auto; background-color: rgba(0,0,0,0.9); justify-content:center; align-items:center; }
+        .modal img { max-width: 90%; max-height: 90%; }
+        .modal-content { background-color:#fff; padding:20px; border-radius:10px; text-align:center; max-width:400px; width:80%; }
+        .close { position:absolute; top:15px; right:35px; color:#f1f1f1; font-size:40px; font-weight:bold; cursor:pointer; }
+        @media (max-width:768px){ .calendar-container { flex-direction: column; } .image-section,.calendar-section{ width:100%; } }
+        /* Mouse trail */
+        .trail { position:absolute; width:8px; height:8px; background-color:#00ffcc; border-radius:50%; pointer-events:none; opacity:0.8; box-shadow:0 0 10px #00ffcc,0 0 20px #00ffcc; z-index:1000; transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
+        .secret-image { display:none; margin-top:10px; max-width:100%; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.2);}
+    </style>
 </head>
 <body>
-<div class="calendar-container">
-    <div class="watermark">🏋️ 🏋️ 🏋️</div>
-    <div class="image-section" id="imageSection">
-        <img id="mainImage" src="https://i.gyazo.com/3bce5dbd28ff5c7e58e0a4ab852cd421.png" alt="March Image">
+    <div class="calendar-container">
+        <div class="watermark">🏋️ 🏋️ 🏋️</div>
+        <div class="image-section">
+            <img src="https://i.gyazo.com/3bce5dbd28ff5c7e58e0a4ab852cd421.png" alt="March Image" onclick="openModal(this.src)">
+        </div>
+        <div class="calendar-section">
+            <h2 class="month-title">March 2026 💪</h2>
+            <button class="play-game-btn" onclick="startGame()">Play Mini-Game</button>
+            <div id="gameBox" class="game-box"></div>
+            <img id="secretImage" class="secret-image" src="https://i.gyazo.com/c0e07101388fe5d55b2bf98bcd90d94a.png" alt="Secret Image">
+
+            <table class="calendar-table">
+                <thead>
+                    <tr><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th class="weekend">Sat</th><th class="weekend">Sun</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td class="weekend" data-day="1">1 <span class="dumbbell">🏋️</span></td></tr>
+                    <tr><td data-day="2">2</td><td data-day="3">3</td><td data-day="4">4</td><td data-day="5">5</td><td data-day="6">6</td><td class="weekend" data-day="7">7</td><td class="weekend" data-day="8">8</td></tr>
+                    <tr><td data-day="9">9</td><td data-day="10">10</td><td data-day="11">11</td><td data-day="12">12</td><td data-day="13">13</td><td class="weekend" data-day="14">14</td><td class="weekend" data-day="15">15</td></tr>
+                    <tr><td data-day="16">16</td><td data-day="17">17</td><td data-day="18">18</td><td data-day="19">19</td><td data-day="20">20</td><td class="weekend" data-day="21">21</td><td class="weekend" data-day="22">22</td></tr>
+                    <tr><td data-day="23">23</td><td data-day="24">24</td><td data-day="25">25</td><td data-day="26">26</td><td data-day="27">27</td><td class="weekend" data-day="28">28</td><td class="weekend" data-day="29">29</td></tr>
+                    <tr><td data-day="30">30</td><td data-day="31">31</td><td></td><td></td><td></td><td class="weekend"></td><td class="weekend"></td></tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="calendar-section">
-        <h2 class="month-title">March 2026 💪</h2>
-        <button id="playGameBtn">Play Mini-Game</button>
-        <table class="calendar-table">
-            <thead>
-                <tr><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th class="weekend">Sat</th><th class="weekend">Sun</th></tr>
-            </thead>
-            <tbody>
-                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td class="weekend" data-day="1">1 <span class="dumbbell">🏋️</span></td></tr>
-                <tr><td data-day="2">2</td><td data-day="3">3</td><td data-day="4">4</td><td data-day="5">5</td><td data-day="6">6</td><td class="weekend" data-day="7">7</td><td class="weekend" data-day="8">8</td></tr>
-                <tr><td data-day="9">9</td><td data-day="10">10</td><td data-day="11">11</td><td data-day="12">12</td><td data-day="13">13</td><td class="weekend" data-day="14">14</td><td class="weekend" data-day="15">15</td></tr>
-                <tr><td data-day="16">16</td><td data-day="17">17</td><td data-day="18">18</td><td data-day="19">19</td><td data-day="20">20</td><td class="weekend" data-day="21">21</td><td class="weekend" data-day="22">22</td></tr>
-                <tr><td data-day="23">23</td><td data-day="24">24</td><td data-day="25">25</td><td data-day="26">26</td><td data-day="27">27</td><td class="weekend" data-day="28">28</td><td class="weekend" data-day="29">29</td></tr>
-                <tr><td data-day="30">30</td><td data-day="31">31</td><td></td><td></td><td></td><td class="weekend"></td><td class="weekend"></td></tr>
-            </tbody>
-        </table>
+
+    <!-- Modals -->
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img id="modalImage" src="" alt="Zoomed Image">
     </div>
-</div>
-
-<!-- Image modal -->
-<div id="imageModal" class="modal" onclick="closeModal()">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <img id="modalImage" src="" alt="Zoomed Image">
-</div>
-
-<!-- Note modal -->
-<div id="noteModal" class="modal" onclick="closeNoteModal()">
-    <div class="modal-content" onclick="event.stopPropagation();">
-        <span class="close" onclick="closeNoteModal()">&times;</span>
-        <h2>Enter Note for Day <span id="noteDay"></span></h2>
-        <input type="text" id="noteInput" style="width:100%;">
-        <button onclick="saveNote()">Save</button>
+    <div id="noteModal" class="modal" onclick="closeNoteModal()">
+        <div class="modal-content" onclick="event.stopPropagation();">
+            <span class="close" onclick="closeNoteModal()">&times;</span>
+            <h2>Enter Note for Day <span id="noteDay"></span></h2>
+            <input type="text" id="noteInput" style="width:100%;">
+            <button onclick="saveNote()">Save</button>
+        </div>
     </div>
-</div>
 
-<script>
-// Modal functions
-function openModal(src){document.getElementById('modalImage').src=src;document.getElementById('imageModal').style.display='flex';}
-function closeModal(){document.getElementById('imageModal').style.display='none';}
-function closeNoteModal(){document.getElementById('noteModal').style.display='none';}
+    <script>
+        // Image modal
+        function openModal(src){document.getElementById('modalImage').src=src; document.getElementById('imageModal').style.display='flex';}
+        function closeModal(){document.getElementById('imageModal').style.display='none';}
+        function closeNoteModal(){document.getElementById('noteModal').style.display='none';}
 
-// Notes system
-const storageKey='march2026Notes';
-let notes=JSON.parse(localStorage.getItem(storageKey))||{};
-let currentDay;
-function saveNote(){
-    const newNote=document.getElementById('noteInput').value.trim();
-    notes[currentDay]=newNote;
-    if(newNote===''){delete notes[currentDay];}
-    localStorage.setItem(storageKey,JSON.stringify(notes));
-    const td=document.querySelector(`.calendar-table td[data-day="${currentDay}"]`);
-    updateNoteDisplay(td,notes[currentDay]);
-    closeNoteModal();
-}
-function updateNoteDisplay(td,noteText){
-    let br=td.querySelector('br');
-    let noteSpan=td.querySelector('.note');
-    if(noteText){
-        if(!br){br=document.createElement('br');td.appendChild(br);}
-        if(!noteSpan){noteSpan=document.createElement('span');noteSpan.className='note';td.appendChild(noteSpan);}
-        noteSpan.innerText=noteText;
-    }else{if(br)br.remove();if(noteSpan)noteSpan.remove();}
-}
-// Load notes
-document.querySelectorAll('.calendar-table td[data-day]').forEach(td=>{
-    const day=td.dataset.day;
-    if(notes[day]){updateNoteDisplay(td,notes[day]);}
-});
-// Click effect + note editing
-document.querySelectorAll('.calendar-table td[data-day]').forEach(td=>{
-    td.addEventListener('click',()=>{
-        td.classList.add('clicked');
-        setTimeout(()=>{td.classList.remove('clicked');},500);
-        currentDay=td.dataset.day;
-        const currentNote=notes[currentDay]||'';
-        document.getElementById('noteDay').innerText=currentDay;
-        document.getElementById('noteInput').value=currentNote;
-        document.getElementById('noteModal').style.display='flex';
-    });
-});
+        // Mouse trail
+        const trailArray=[]; const maxTrail=20;
+        for(let i=0;i<maxTrail;i++){const div=document.createElement('div'); div.className='trail'; document.body.appendChild(div); trailArray.push(div);}
+        let trailIndex=0;
+        document.addEventListener('mousemove',(e)=>{ const div=trailArray[trailIndex]; div.style.left=e.pageX+'px'; div.style.top=e.pageY+'px'; div.style.opacity=1; trailIndex=(trailIndex+1)%maxTrail; trailArray.forEach((trail,index)=>{if(index!==trailIndex){trail.style.opacity-=0.05;if(trail.style.opacity<=0) trail.style.opacity=0;}});});
 
-// Mouse trail
-const trailArray=[];
-const maxTrail=20;
-for(let i=0;i<maxTrail;i++){const div=document.createElement('div');div.className='trail';document.body.appendChild(div);trailArray.push(div);}
-let trailIndex=0;
-document.addEventListener('mousemove',(e)=>{const div=trailArray[trailIndex];div.style.left=e.pageX+'px';div.style.top=e.pageY+'px';div.style.opacity=1;trailIndex=(trailIndex+1)%maxTrail;trailArray.forEach((trail,index)=>{if(index!==trailIndex){trail.style.opacity-=0.05;if(trail.style.opacity<=0)trail.style.opacity=0;}});});
+        // Notes persistence
+        const storageKey='march2026Notes'; let notes=JSON.parse(localStorage.getItem(storageKey))||{};
+        function saveNote(){const newNote=document.getElementById('noteInput').value.trim(); notes[currentDay]=newNote; if(newNote===''){delete notes[currentDay];} localStorage.setItem(storageKey,JSON.stringify(notes)); const td=document.querySelector(`.calendar-table td[data-day="${currentDay}"]`); updateNoteDisplay(td,notes[currentDay]); closeNoteModal();}
+        function updateNoteDisplay(td,noteText){let br=td.querySelector('br'); let noteSpan=td.querySelector('.note'); if(noteText){if(!br){br=document.createElement('br'); td.appendChild(br);} if(!noteSpan){noteSpan=document.createElement('span'); noteSpan.className='note'; td.appendChild(noteSpan);} noteSpan.innerText=noteText;} else {if(br) br.remove(); if(noteSpan) noteSpan.remove();}}
+        document.querySelectorAll('.calendar-table td[data-day]').forEach(td=>{const day=td.dataset.day;if(notes[day]){updateNoteDisplay(td,notes[day]);} td.addEventListener('click',()=>{td.classList.add('clicked'); setTimeout(()=>{td.classList.remove('clicked');},500); currentDay=td.dataset.day; const currentNote=notes[currentDay]||''; document.getElementById('noteDay').innerText=currentDay; document.getElementById('noteInput').value=currentNote; document.getElementById('noteModal').style.display='flex';});});
 
-// Mini-game
-const playBtn=document.getElementById('playGameBtn');
-const imageSection=document.getElementById('imageSection');
-const secretImage="https://i.gyazo.com/c0e07101388fe5d55b2bf98bcd90d94a.png";
-playBtn.addEventListener('click',startGame);
-
-function startGame(){
-    playBtn.style.display='none';
-    let score=0;
-    const total=5; // number of white balls to click
-    const balls=[];
-    function createBall(){
-        const ball=document.createElement('div');
-        ball.style.width='50px';
-        ball.style.height='50px';
-        ball.style.borderRadius='50%';
-        ball.style.position='absolute';
-        ball.style.backgroundColor='white';
-        ball.style.top=Math.random()*(imageSection.clientHeight-50)+'px';
-        ball.style.left=Math.random()*(imageSection.clientWidth-50)+'px';
-        ball.style.cursor='pointer';
-        imageSection.appendChild(ball);
-        balls.push(ball);
-        setTimeout(()=>{
-            if(ball.parentElement){ball.style.backgroundColor='black';ball.removeEventListener('click',ballClicked);}
-        },1500); // white lasts 1.5s
-        ball.addEventListener('click',ballClicked);
-        function ballClicked(){
-            score++;
-            ball.remove();
-            if(score>=total){endGame();}
+        // Mini-game
+        const gameBox=document.getElementById('gameBox'); const secretImage=document.getElementById('secretImage'); 
+        function startGame(){
+            gameBox.style.display='block';
+            secretImage.style.display='none';
+            gameBox.innerHTML='';
+            const balls=[]; let score=0; const totalBalls=10;
+            function spawnBall(){
+                const ball=document.createElement('div'); ball.style.width='40px'; ball.style.height='40px';
+                ball.style.borderRadius='50%'; ball.style.position='absolute'; ball.style.top=Math.random()*(gameBox.clientHeight-40)+'px';
+                ball.style.left=Math.random()*(gameBox.clientWidth-40)+'px'; ball.style.backgroundColor='white'; gameBox.appendChild(ball);
+                balls.push(ball);
+                let turned=false;
+                const timeout=setTimeout(()=>{
+                    ball.style.backgroundColor='black'; turned=true;
+                },1500);
+                ball.addEventListener('click',()=>{
+                    if(!turned){
+                        ball.style.display='none'; score++; checkComplete();
+                    }
+                });
+            }
+            function checkComplete(){if(score>=totalBalls){balls.forEach(b=>b.remove()); secretImage.style.display='block'; gameBox.style.display='none';}}
+            for(let i=0;i<totalBalls;i++){setTimeout(spawnBall,i*500);}
         }
-    }
-    let interval=setInterval(createBall,800);
-    function endGame(){
-        clearInterval(interval);
-        balls.forEach(b=>b.remove());
-        imageSection.innerHTML=`<img src="${secretImage}" alt="Secret March Image">`;
-    }
-}
-</script>
+    </script>
 </body>
 </html>
