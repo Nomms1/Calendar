@@ -60,7 +60,6 @@ body {
     cursor: pointer;
 }
 .image-section img:hover { transform: scale(1.05); }
-
 .calendar-section {
     width: 50%;
     padding: 30px;
@@ -78,7 +77,7 @@ body {
 }
 .play-game-btn {
     display: block;
-    margin: 10px auto 10px auto;
+    margin: 10px auto 5px auto;
     padding: 10px 20px;
     font-size: 16px;
     background-color: #f57f17;
@@ -143,6 +142,13 @@ body {
     background-color:red;
     border-radius:15px;
     box-shadow:0 5px 20px rgba(0,0,0,0.5);
+    overflow:hidden;
+}
+#gameBox p {
+    color:white;
+    font-size:16px;
+    text-align:center;
+    margin:10px 0 0 0;
 }
 .ball {
     position:absolute;
@@ -167,8 +173,7 @@ body {
     </div>
     <div class="calendar-section">
         <h2 class="month-title">March 2026 💪</h2>
-        <button class="play-game-btn" onclick="startGame()">Play Mini Game</button>
-        <p style="text-align:center;">Press white dots to reveal secret image</p>
+        <button class="play-game-btn" onclick="startGame()">Play March Mini Game</button>
         <table class="calendar-table">
             <thead><tr>
                 <th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th class="weekend">Sat</th><th class="weekend">Sun</th>
@@ -200,7 +205,9 @@ body {
 </div>
 
 <!-- Mini-game -->
-<div id="gameBox"></div>
+<div id="gameBox">
+    <p>Click the white dots before they turn black to reveal the secret image!</p>
+</div>
 
 <script>
 // Image modal
@@ -251,18 +258,28 @@ document.addEventListener('mousemove',(e)=>{ const div=trailArray[trailIndex]; d
 const gameBox=document.getElementById('gameBox');
 const secretImage=document.getElementById('secretImage');
 function startGame(){
-    gameBox.innerHTML=''; gameBox.style.display='block'; secretImage.style.display='none';
-    const totalBalls=8; let clickedBalls=0;
+    gameBox.innerHTML='<p>Click the white dots before they turn black to reveal the secret image!</p>';
+    gameBox.style.display='block'; secretImage.style.display='none';
+    const totalBalls=8; let clickedBalls=0; const balls=[];
     for(let i=0;i<totalBalls;i++){
         const ball=document.createElement('div'); ball.className='ball';
         ball.style.top=Math.random()*(gameBox.clientHeight-40)+'px';
         ball.style.left=Math.random()*(gameBox.clientWidth-40)+'px';
         ball.style.backgroundColor='white';
         gameBox.appendChild(ball);
-        let turnedBlack=false;
-        const timeout=setTimeout(()=>{ turnedBlack=true; ball.style.backgroundColor='black';},1500);
+        balls.push(ball);
+        ball.isWhite=true;
+
+        // repeatedly turn black then back white slowly
+        setInterval(()=>{
+            if(ball.isWhite && !ball.clicked){ ball.style.backgroundColor='black'; ball.isWhite=false;
+            setTimeout(()=>{ if(!ball.clicked){ ball.style.backgroundColor='white'; ball.isWhite=true; }},1200);}
+        },2500);
+
         ball.addEventListener('click',()=>{
-            if(!turnedBlack){ ball.remove(); clickedBalls++; if(clickedBalls===totalBalls){ endGame(); } }
+            if(ball.isWhite && !ball.clicked){ ball.clicked=true; ball.style.display='none'; clickedBalls++;
+                if(clickedBalls===totalBalls){ endGame(); }
+            }
         });
     }
 }
