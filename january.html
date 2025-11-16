@@ -211,8 +211,14 @@ body {
 #secretReward {
     display: none;
     margin-top: 20px;
-    max-width: 80%;
-    border-radius: 10px;
+    max-width: 300px;
+    max-height: 400px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+}
+#secretReward:hover {
+    transform: scale(1.05);
 }
 
 .fade-in {
@@ -282,170 +288,4 @@ body {
 <tr>
 <td data-day="12">12</td>
 <td data-day="13">13</td>
-<td data-day="14">14</td>
-<td data-day="15">15</td>
-<td data-day="16">16</td>
-<td class="weekend" data-day="17">17</td>
-<td class="weekend" data-day="18">18</td>
-</tr>
-<tr>
-<td data-day="19">19</td>
-<td data-day="20">20</td>
-<td data-day="21">21</td>
-<td data-day="22">22</td>
-<td data-day="23">23</td>
-<td class="weekend" data-day="24">24</td>
-<td class="weekend" data-day="25">25</td>
-</tr>
-<tr>
-<td data-day="26">26</td>
-<td data-day="27">27</td>
-<td data-day="28">28</td>
-<td data-day="29">29</td>
-<td data-day="30">30</td>
-<td class="weekend" data-day="31">31</td>
-<td class="weekend"></td>
-</tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<!-- IMAGE MODAL -->
-<div id="imageModal" class="modal" onclick="closeModal()">
-<span class="close">&times;</span>
-<img id="modalImage" src="">
-</div>
-
-<!-- NOTE MODAL -->
-<div id="noteModal" class="modal" onclick="closeNoteModal()">
-<div class="modal-content" onclick="event.stopPropagation()">
-    <span class="close">&times;</span>
-    <h2>Enter Note for Day <span id="noteDay"></span></h2>
-    <input type="text" id="noteInput" style="width:100%;">
-    <button onclick="saveNote()">Save</button>
-</div>
-</div>
-
-<!-- MINIGAME OVERLAY -->
-<div id="miniGameOverlay">
-<h1>January Mini-Game ❄️</h1>
-<p>Click the glowing box <b>3 times</b> to unlock the secret image!</p>
-<p>Hits: <span id="hitCounter">0</span>/3</p>
-
-<div id="gameBox" onclick="hitBox()"></div>
-
-<img id="secretReward"
-     src="https://i.gyazo.com/2de23f75dcbf8cdf09e1735e47174869.png"
-     alt="Secret Reward Image">
-<button onclick="closeMiniGame()">Close</button>
-</div>
-
-<script>
-function openModal(src){
-    document.getElementById("modalImage").src = src;
-    document.getElementById("imageModal").style.display = "flex";
-}
-function closeModal(){ document.getElementById("imageModal").style.display = "none"; }
-
-let currentDay;
-const storageKey = "january2026Notes";
-let notes = JSON.parse(localStorage.getItem(storageKey)) || {};
-
-function updateNoteDisplay(td, note){
-    let br = td.querySelector("br");
-    let span = td.querySelector(".note");
-    if(note){
-        if(!br){ br = document.createElement("br"); td.appendChild(br); }
-        if(!span){
-            span = document.createElement("span");
-            span.className = "note";
-            td.appendChild(span);
-        }
-        span.innerText = note;
-    } else {
-        if(br) br.remove();
-        if(span) span.remove();
-    }
-}
-
-document.querySelectorAll('.calendar-table td[data-day]').forEach(td=>{
-    const day = td.dataset.day;
-    if(notes[day]) updateNoteDisplay(td, notes[day]);
-
-    td.addEventListener('click', ()=>{
-        currentDay = td.dataset.day;
-        document.getElementById("noteDay").innerText = currentDay;
-        document.getElementById("noteInput").value = notes[currentDay] || "";
-        document.getElementById("noteModal").style.display = "flex";
-    });
-});
-
-function saveNote(){
-    const val = document.getElementById("noteInput").value.trim();
-    if(val === "") delete notes[currentDay];
-    else notes[currentDay] = val;
-    localStorage.setItem(storageKey, JSON.stringify(notes));
-    let td = document.querySelector(`td[data-day="${currentDay}"]`);
-    updateNoteDisplay(td, notes[currentDay]);
-    closeNoteModal();
-}
-function closeNoteModal(){ document.getElementById("noteModal").style.display = "none"; }
-
-const trail = [];
-for(let i=0;i<20;i++){
-    let div = document.createElement("div");
-    div.className = "trail";
-    document.body.appendChild(div);
-    trail.push(div);
-}
-let ti = 0;
-document.addEventListener("mousemove", e=>{
-    let d = trail[ti];
-    d.style.left = e.pageX+"px";
-    d.style.top = e.pageY+"px";
-    d.style.opacity = 1;
-    ti = (ti+1)%20;
-    trail.forEach((t,i)=>{
-        if(i!==ti){
-            t.style.opacity -= 0.05;
-            if(t.style.opacity < 0) t.style.opacity = 0;
-        }
-    });
-});
-
-let hits = 0;
-const maxHits = 3;
-
-function startMiniGame(){
-    hits = 0;
-    document.getElementById("hitCounter").innerText = hits;
-    document.getElementById("secretReward").style.display = "none";
-    document.getElementById("gameBox").style.pointerEvents = "auto";
-    document.getElementById("miniGameOverlay").style.display = "block";
-}
-
-function hitBox(){
-    if(hits >= maxHits) return; // prevent more than 3 clicks
-    hits++;
-    document.getElementById("hitCounter").innerText = hits;
-
-    let box = document.getElementById("gameBox");
-    box.style.transform = `scale(${1+Math.random()*0.2})`;
-    box.style.left = Math.random()*300+"px";
-
-    if(hits >= maxHits){
-        let reward = document.getElementById("secretReward");
-        reward.style.display = "block";
-        reward.classList.add("fade-in");
-        box.style.pointerEvents = "none";
-    }
-}
-
-function closeMiniGame(){
-    document.getElementById("miniGameOverlay").style.display = "none";
-}
-</script>
-
-</body>
-</html>
+<td data-day="14">14</
