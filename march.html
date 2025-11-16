@@ -49,17 +49,14 @@ body {
     padding: 30px;
     position: relative;
     z-index: 2;
+    overflow: hidden; 
 }
 .image-section img {
     max-width: 100%;
     max-height: 100%;
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease;
     cursor: pointer;
-}
-.image-section img:hover {
-    transform: scale(1.05);
 }
 .calendar-section {
     width: 50%;
@@ -90,9 +87,9 @@ body {
     border-radius: 8px;
     transition: background-color 0.3s ease, box-shadow 0.3s ease, text-shadow 0.3s ease;
     color: #ffffff; 
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; 
     cursor: pointer; 
-    vertical-align: top;
+    vertical-align: top; 
     min-height: 60px; 
 }
 .calendar-table th {
@@ -107,26 +104,39 @@ body {
 .calendar-table td:hover {
     background-color: rgba(255, 255, 255, 1);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-shadow: 0 0 10px #f57f17, 0 0 20px #f57f17, 0 0 30px #f57f17;
+    text-shadow: 0 0 10px #f57f17, 0 0 20px #f57f17, 0 0 30px #f57f17; 
 }
 .calendar-table td.clicked {
     animation: pulse 0.5s ease-in-out;
 }
 @keyframes pulse {
-    0% { transform: scale(1); box-shadow: 0 0 0 rgba(245, 127, 23, 0.7); }
-    50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(245, 127, 23, 0.7); }
-    100% { transform: scale(1); box-shadow: 0 0 0 rgba(245, 127, 23, 0.7); }
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(245, 127, 23, 0.7);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 0 20px rgba(245, 127, 23, 0.7);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(245, 127, 23, 0.7);
+    }
 }
-.weekend { color: #ffffff; }
-.dumbbell { font-size: 12px; color: #f57f17; }
+.weekend {
+    color: #ffffff; 
+}
+.dumbbell {
+    font-size: 12px;
+    color: #f57f17; 
+}
 .note {
     display: block;
     font-size: 12px;
     color: #f57f17; 
-    text-shadow: none;
+    text-shadow: none; 
     word-wrap: break-word; 
 }
-/* Modal for zoom */
 .modal {
     display: none;
     position: fixed;
@@ -140,7 +150,10 @@ body {
     justify-content: center;
     align-items: center;
 }
-.modal img { max-width: 90%; max-height: 90%; }
+.modal img {
+    max-width: 90%;
+    max-height: 90%;
+}
 .modal-content {
     background-color: #fff;
     padding: 20px;
@@ -159,10 +172,13 @@ body {
     cursor: pointer;
 }
 @media (max-width: 768px) {
-    .calendar-container { flex-direction: column; }
-    .image-section, .calendar-section { width: 100%; }
+    .calendar-container {
+        flex-direction: column;
+    }
+    .image-section, .calendar-section {
+        width: 100%;
+    }
 }
-/* Mouse trail styles */
 .trail {
     position: absolute;
     width: 8px;
@@ -171,25 +187,18 @@ body {
     border-radius: 50%;
     pointer-events: none;
     opacity: 0.8;
-    box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+    box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc; 
     z-index: 1000;
     transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
-/* Game overlay */
-#gameOverlay {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-}
-.weight-plate {
+.barbell {
     position: absolute;
     width: 50px;
-    height: 50px;
+    height: 20px;
     background-color: #f57f17;
-    border-radius: 50%;
-    pointer-events: auto;
+    border-radius: 5px;
     cursor: pointer;
+    pointer-events: auto;
     box-shadow: 0 0 10px #ffa000;
     transition: transform 0.2s ease;
 }
@@ -199,7 +208,7 @@ body {
 <div class="calendar-container">
     <div class="watermark">🏋️🏋️🏋️</div>
     <div class="image-section">
-        <img id="secretImage" src="https://i.gyazo.com/3bce5dbd28ff5c7e58e0a4ab852cd421.png" alt="March Image" onclick="startGame()">
+        <img id="mainImage" src="https://i.gyazo.com/3bce5dbd28ff5c7e58e0a4ab852cd421.png" alt="March Image" onclick="startMiniGame()">
         <div id="gameOverlay"></div>
     </div>
     <div class="calendar-section">
@@ -207,7 +216,13 @@ body {
         <table class="calendar-table">
             <thead>
                 <tr>
-                    <th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th class="weekend">Sat</th><th class="weekend">Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th class="weekend">Sat</th>
+                    <th class="weekend">Sun</th>
                 </tr>
             </thead>
             <tbody>
@@ -234,11 +249,11 @@ body {
     </div>
 </div>
 
-<!-- Modal and Notes (same as before) -->
 <div id="imageModal" class="modal" onclick="closeModal()">
     <span class="close" onclick="closeModal()">&times;</span>
     <img id="modalImage" src="" alt="Zoomed Image">
 </div>
+
 <div id="noteModal" class="modal" onclick="closeNoteModal()">
     <div class="modal-content" onclick="event.stopPropagation();">
         <span class="close" onclick="closeNoteModal()">&times;</span>
@@ -249,73 +264,115 @@ body {
 </div>
 
 <script>
+function openModal(src){
+    document.getElementById('modalImage').src = src;
+    document.getElementById('imageModal').style.display = 'flex';
+}
+function closeModal(){
+    document.getElementById('imageModal').style.display = 'none';
+}
+function closeNoteModal(){
+    document.getElementById('noteModal').style.display = 'none';
+}
 let currentDay;
-const storageKey = 'march2026Notes';
-let notes = JSON.parse(localStorage.getItem(storageKey)) || {};
+function saveNote(){
+    const newNote = document.getElementById('noteInput').value.trim();
+    notes[currentDay] = newNote;
+    if(newNote===''){ delete notes[currentDay]; }
+    localStorage.setItem(storageKey, JSON.stringify(notes));
+    const td = document.querySelector(`.calendar-table td[data-day="${currentDay}"]`);
+    updateNoteDisplay(td, notes[currentDay]);
+    closeNoteModal();
+}
 
-function updateNoteDisplay(td, noteText){
+// Persistent notes
+const storageKey='march2026Notes';
+let notes=JSON.parse(localStorage.getItem(storageKey)) || {};
+function updateNoteDisplay(td,noteText){
     let br = td.querySelector('br');
     let noteSpan = td.querySelector('.note');
     if(noteText){
-        if(!br){ br=document.createElement('br'); td.appendChild(br);}
-        if(!noteSpan){ noteSpan=document.createElement('span'); noteSpan.className='note'; td.appendChild(noteSpan);}
-        noteSpan.innerText = noteText;
-    } else { if(br) br.remove(); if(noteSpan) noteSpan.remove(); }
+        if(!br){ br=document.createElement('br'); td.appendChild(br); }
+        if(!noteSpan){ noteSpan=document.createElement('span'); noteSpan.className='note'; td.appendChild(noteSpan); }
+        noteSpan.innerText=noteText;
+    } else {
+        if(br) br.remove();
+        if(noteSpan) noteSpan.remove();
+    }
 }
-
 document.querySelectorAll('.calendar-table td[data-day]').forEach(td=>{
     const day=td.dataset.day;
-    if(notes[day]) updateNoteDisplay(td, notes[day]);
-    td.addEventListener('click', ()=>{
-        td.classList.add('clicked'); setTimeout(()=>{td.classList.remove('clicked');},500);
-        currentDay=day;
-        const currentNote = notes[currentDay] || '';
+    if(notes[day]){ updateNoteDisplay(td,notes[day]); }
+});
+document.querySelectorAll('.calendar-table td[data-day]').forEach(td=>{
+    td.addEventListener('click',()=>{
+        td.classList.add('clicked');
+        setTimeout(()=>{ td.classList.remove('clicked'); },500);
+        currentDay=td.dataset.day;
+        const currentNote=notes[currentDay]||'';
         document.getElementById('noteDay').innerText=currentDay;
         document.getElementById('noteInput').value=currentNote;
         document.getElementById('noteModal').style.display='flex';
     });
 });
 
-function saveNote(){
-    const newNote = document.getElementById('noteInput').value.trim();
-    notes[currentDay] = newNote;
-    if(newNote==='') delete notes[currentDay];
-    localStorage.setItem(storageKey, JSON.stringify(notes));
-    const td = document.querySelector(`.calendar-table td[data-day="${currentDay}"]`);
-    updateNoteDisplay(td, notes[currentDay]);
-    closeNoteModal();
-}
-function openModal(src){document.getElementById('modalImage').src=src;document.getElementById('imageModal').style.display='flex';}
-function closeModal(){document.getElementById('imageModal').style.display='none';}
-function closeNoteModal(){document.getElementById('noteModal').style.display='none';}
-
 // Mouse trail
-const trailArray=[]; const maxTrail=20;
-for(let i=0;i<maxTrail;i++){let div=document.createElement('div');div.className='trail';document.body.appendChild(div);trailArray.push(div);}
+const trailArray=[];
+const maxTrail=20;
+for(let i=0;i<maxTrail;i++){
+    const div=document.createElement('div');
+    div.className='trail';
+    document.body.appendChild(div);
+    trailArray.push(div);
+}
 let trailIndex=0;
-document.addEventListener('mousemove',(e)=>{const div=trailArray[trailIndex]; div.style.left=e.pageX+'px'; div.style.top=e.pageY+'px'; div.style.opacity=1; trailIndex=(trailIndex+1)%maxTrail; trailArray.forEach((trail,index)=>{if(index!==trailIndex){trail.style.opacity-=0.05;if(trail.style.opacity<=0)trail.style.opacity=0;}});});
+document.addEventListener('mousemove',e=>{
+    const div=trailArray[trailIndex];
+    div.style.left=e.pageX+'px';
+    div.style.top=e.pageY+'px';
+    div.style.opacity=1;
+    trailIndex=(trailIndex+1)%maxTrail;
+    trailArray.forEach((trail,index)=>{
+        if(index!==trailIndex){ trail.style.opacity-=0.05; if(trail.style.opacity<=0) trail.style.opacity=0; }
+    });
+});
 
-// --- Mini Game: Weight Plates ---
-let platesCaught=0;
-function startGame(){
+// --- Mini-game ---
+let barbellsClicked=0;
+const totalBarbells=8;
+function startMiniGame(){
+    barbellsClicked=0;
     const overlay=document.getElementById('gameOverlay');
     overlay.innerHTML='';
-    const secretSrc='https://i.gyazo.com/c0e07101388fe5d55b2bf98bcd90d94a.png';
-    const totalPlates=10;
-    for(let i=0;i<totalPlates;i++){
-        const plate=document.createElement('div');
-        plate.className='weight-plate';
-        plate.style.top=Math.random()*80+'%';
-        plate.style.left=Math.random()*80+'%';
-        plate.onclick=function(){
-            plate.remove();
-            platesCaught++;
-            if(platesCaught>=totalPlates){
-                document.getElementById('secretImage').src=secretSrc;
+    overlay.style.pointerEvents='auto';
+    for(let i=0;i<totalBarbells;i++){
+        const barbell=document.createElement('div');
+        barbell.className='barbell';
+        barbell.style.top=Math.random()*70+'%';
+        barbell.style.left=Math.random()*70+'%';
+        let dx=(Math.random()-0.5)*2;
+        let dy=(Math.random()-0.5)*2;
+        const move=()=>{
+            let top=parseFloat(barbell.style.top);
+            let left=parseFloat(barbell.style.left);
+            top+=dy; left+=dx;
+            if(top<0 || top>80) dy=-dy;
+            if(left<0 || left>80) dx=-dx;
+            barbell.style.top=top+'%';
+            barbell.style.left=left+'%';
+            requestAnimationFrame(move);
+        };
+        move();
+        barbell.onclick=()=>{
+            barbell.remove();
+            barbellsClicked++;
+            if(barbellsClicked===totalBarbells){
+                document.getElementById('mainImage').src='https://i.gyazo.com/c0e07101388fe5d55b2bf98bcd90d94a.png';
                 overlay.innerHTML='';
+                overlay.style.pointerEvents='none';
             }
-        }
-        overlay.appendChild(plate);
+        };
+        overlay.appendChild(barbell);
     }
 }
 </script>
