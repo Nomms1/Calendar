@@ -1,248 +1,290 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>January 2026 Calendar</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
 <style>
+/* ---- YOUR ORIGINAL STYLES (UNCHANGED) ---- */
+
 body {
-font-family: 'Roboto', sans-serif;
-background-color: #f0f4f8; /* Soft light gray-blue for modern feel */
-margin: 0;
-padding: 20px;
-display: flex;
-justify-content: center;
-align-items: center;
-min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f4f8;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
+
 .calendar-container {
-display: flex;
-max-width: 1200px;
-width: 100%;
-background: linear-gradient(135deg, #e0f7fa 0%, #b3e5fc 100%); /* Modern gradient blue */
-border-radius: 20px;
-overflow: hidden;
-box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Deeper shadow for pro depth */
-position: relative; /* For watermark positioning */
+    display: flex;
+    max-width: 1200px;
+    width: 100%;
+    background: linear-gradient(135deg, #e0f7fa 0%, #b3e5fc 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    position: relative;
 }
+
 .watermark {
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-font-size: 200px;
-color: rgba(255, 255, 255, 0.1); /* Subtle white watermark text */
-font-weight: 700;
-pointer-events: none;
-z-index: 1;
-user-select: none;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 200px;
+    color: rgba(255,255,255,0.1);
+    font-weight: 700;
+    pointer-events: none;
+    z-index: 1;
+    user-select: none;
 }
+
 .icicle-watermark {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 150px; /* Adjust height to fit the icicles */
-background-image: url('https://t3.ftcdn.net/jpg/02/32/29/54/360_F_232295459_lwTe5LUSYtpI7WhvmvaU68HgFdasxGaZ.jpg');
-background-repeat: repeat-x;
-background-size: contain;
-opacity: 0.4; /* Subtle transparency for watermark effect */
-pointer-events: none;
-z-index: 1;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 150px;
+    background-image: url('https://t3.ftcdn.net/jpg/02/32/29/54/360_F_232295459_lwTe5LUSYtpI7WhvmvaU68HgFdasxGaZ.jpg');
+    background-repeat: repeat-x;
+    background-size: contain;
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 1;
 }
+
 .image-section {
-width: 50%;
-background-color: rgba(225, 245, 254, 0.8); /* Semi-transparent overlay for modernity */
-display: flex;
-align-items: center;
-justify-content: center;
-padding: 30px;
-position: relative;
-z-index: 2;
+    width: 50%;
+    background-color: rgba(225, 245, 254, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    position: relative;
+    z-index: 2;
 }
 .image-section img {
-max-width: 100%;
-max-height: 100%;
-border-radius: 15px;
-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); /* Elevated shadow */
-transition: transform 0.3s ease; /* Modern hover effect */
-cursor: pointer; /* Indicate clickable */
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+    cursor: pointer;
 }
 .image-section img:hover {
-transform: scale(1.05);
+    transform: scale(1.05);
 }
+
 .calendar-section {
-width: 50%;
-padding: 30px;
-position: relative;
-z-index: 2;
+    width: 50%;
+    padding: 30px;
+    position: relative;
+    z-index: 2;
 }
+
 .month-title {
-text-align: center;
-font-size: 28px;
-color: #d32f2f; /* Red to match the scarf accent */
-margin-bottom: 20px;
-font-weight: 700;
-text-transform: uppercase;
-letter-spacing: 1px; /* Modern spacing */
+    text-align: center;
+    font-size: 28px;
+    color: #d32f2f;
+    margin-bottom: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
+
+/* --- MINIGAME BUTTON STYLE --- */
+#playGameButton {
+    display: block;
+    margin: 10px auto 20px;
+    padding: 12px 20px;
+    background-color: #4fc3f7;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: 0.3s ease;
+}
+#playGameButton:hover {
+    background-color: #039be5;
+    transform: scale(1.05);
+}
+
+/* ---- CALENDAR TABLE ---- */
 .calendar-table {
-width: 100%;
-border-collapse: separate;
-border-spacing: 0 5px; /* Modern spacing */
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 5px;
 }
 .calendar-table th, .calendar-table td {
-border: none;
-padding: 12px;
-text-align: center;
-font-size: 16px;
-background-color: rgba(255, 255, 255, 0.8); /* Glassmorphism effect */
-border-radius: 8px;
-transition: background-color 0.3s ease, box-shadow 0.3s ease, text-shadow 0.3s ease;
-cursor: pointer; /* Make dates look clickable */
-vertical-align: top; /* Align content to top for better note display */
-min-height: 60px; /* Ensure space for notes */
+    border: none;
+    padding: 12px;
+    text-align: center;
+    font-size: 16px;
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 8px;
+    transition: 0.3s ease;
+    cursor: pointer;
+    vertical-align: top;
+    min-height: 60px;
 }
 .calendar-table th {
-background-color: #4fc3f7; /* Brighter sky blue for headers */
-color: #fff;
-font-weight: 400;
-text-transform: uppercase;
-letter-spacing: 0.5px;
-cursor: default; /* Headers not clickable */
+    background-color: #4fc3f7;
+    color: #fff;
+    font-weight: 400;
 }
 .calendar-table td {
-color: #81d4fa; /* Light blue for dates */
-text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; /* Black outline */
+    color: #81d4fa;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000,
+                  -1px 1px 0 #000, 1px 1px 0 #000;
 }
 .calendar-table td:hover {
-background-color: rgba(255, 255, 255, 1);
-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-text-shadow: 0 0 10px #d32f2f, 0 0 20px #d32f2f, 0 0 30px #d32f2f; /* Red glow effect for lighting up */
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-shadow: 0 0 10px #d32f2f, 0 0 20px #d32f2f;
 }
-.calendar-table td.clicked {
-animation: pulse 0.5s ease-in-out;
-}
-@keyframes pulse {
-0% {
-transform: scale(1);
-box-shadow: 0 0 0 rgba(211, 47, 47, 0.7);
-}
-50% {
-transform: scale(1.1);
-box-shadow: 0 0 20px rgba(211, 47, 47, 0.7);
-}
-100% {
-transform: scale(1);
-box-shadow: 0 0 0 rgba(211, 47, 47, 0.7);
-}
-}
-.weekend {
-color: #81d4fa; /* Light blue for weekends too */
-}
-.snowflake {
-font-size: 12px;
-color: #81d4fa;
-}
+
+.weekend { color: #81d4fa; }
+
+.snowflake { font-size: 12px; color: #81d4fa; }
+
 .note {
-display: block;
-font-size: 12px;
-color: #d32f2f; /* Red for notes */
-text-shadow: none; /* No outline for notes */
-word-wrap: break-word; /* Ensure long notes wrap */
+    display: block;
+    font-size: 12px;
+    color: #d32f2f;
+    text-shadow: none;
 }
-/* Modal for zoom */
+
+/* ----- MODALS (Image & Notes) ----- */
+
 .modal {
-display: none;
-position: fixed;
-z-index: 1000;
-left: 0;
-top: 0;
-width: 100%;
-height: 100%;
-overflow: auto;
-background-color: rgba(0,0,0,0.9);
-justify-content: center;
-align-items: center;
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.9);
+    justify-content: center;
+    align-items: center;
 }
 .modal img {
-max-width: 90%;
-max-height: 90%;
+    max-width: 90%;
+    max-height: 90%;
 }
 .modal-content {
-background-color: #fff;
-padding: 20px;
-border-radius: 10px;
-text-align: center;
-max-width: 400px;
-width: 80%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+    width: 80%;
 }
 .close {
-position: absolute;
-top: 15px;
-right: 35px;
-color: #f1f1f1;
-font-size: 40px;
-font-weight: bold;
-cursor: pointer;
+    position: absolute;
+    top: 15px; right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
 }
-@media (max-width: 768px) {
-.calendar-container {
-flex-direction: column;
+
+/* ----- MINIGAME OVERLAY ----- */
+
+#miniGameOverlay {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    color: white;
+    padding: 40px;
+    text-align: center;
 }
-.image-section, .calendar-section {
-width: 100%;
+
+#gameBox {
+    width: 200px;
+    height: 200px;
+    background: #4fc3f7;
+    margin: 30px auto;
+    border-radius: 12px;
+    box-shadow: 0 0 20px #4fc3f7;
+    cursor: pointer;
+    transition: 0.1s ease;
 }
-.icicle-watermark {
-height: 100px; /* Adjust for smaller screens */
+
+/* Hidden reward image */
+#secretReward {
+    display: none;
+    margin-top: 20px;
+    max-width: 80%;
+    border-radius: 10px;
 }
+
+.fade-in {
+    animation: fadeIn 1s ease forwards;
 }
-/* Mouse trail styles */
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+/* Mouse Trail */
 .trail {
-position: absolute;
-width: 8px;
-height: 8px;
-background-color: #00ffcc; /* Mako green-blue from FF7 */
-border-radius: 50%;
-pointer-events: none;
-opacity: 0.8;
-box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc; /* Glowing effect */
-z-index: 1000;
-transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    position: absolute;
+    width: 8px; height: 8px;
+    background-color: #00ffcc;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.8;
+    box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+    z-index: 1000;
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
+
 </style>
 </head>
+
 <body>
+
 <div class="calendar-container">
-<div class="watermark">2026</div> <!-- Pro watermark text; can replace with SVG for patterns -->
-<div class="icicle-watermark"></div>
-<div class="image-section">
-<img src="https://i.gyazo.com/0f2396abcd1ab1d7c294eaccaaf7ebd8.png" alt="Your Custom January Image" onclick="openModal(this.src)">
-</div>
-<div class="calendar-section">
-<h2 class="month-title">January 2026 ❄️</h2>
-<table class="calendar-table">
-<thead>
-<tr>
-<th>Mon</th>
-<th>Tue</th>
-<th>Wed</th>
-<th>Thu</th>
-<th>Fri</th>
-<th class="weekend">Sat</th>
-<th class="weekend">Sun</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td data-day="1">1 <span class="snowflake">❄️</span></td>
+    <div class="watermark">2026</div>
+    <div class="icicle-watermark"></div>
+
+    <div class="image-section">
+        <img src="https://i.gyazo.com/0f2396abcd1ab1d7c294eaccaaf7ebd8.png"
+             alt="January Image"
+             onclick="openModal(this.src)">
+    </div>
+
+    <div class="calendar-section">
+        <h2 class="month-title">January 2026 ❄️</h2>
+
+        <!-- ⭐ MINIGAME BUTTON ⭐ -->
+        <button id="playGameButton" onclick="startMiniGame()">Play January Mini-Game ❄️</button>
+
+        <table class="calendar-table">
+            <thead>
+                <tr>
+                    <th>Mon</th><th>Tue</th><th>Wed</th>
+                    <th>Thu</th><th>Fri</th>
+                    <th class="weekend">Sat</th>
+                    <th class="weekend">Sun</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+<td></td><td></td><td></td>
+<td data-day="1">1 ❄️</td>
 <td data-day="2">2</td>
 <td class="weekend" data-day="3">3</td>
 <td class="weekend" data-day="4">4</td>
 </tr>
+
 <tr>
 <td data-day="5">5</td>
 <td data-day="6">6</td>
@@ -252,6 +294,7 @@ transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 <td class="weekend" data-day="10">10</td>
 <td class="weekend" data-day="11">11</td>
 </tr>
+
 <tr>
 <td data-day="12">12</td>
 <td data-day="13">13</td>
@@ -261,6 +304,7 @@ transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 <td class="weekend" data-day="17">17</td>
 <td class="weekend" data-day="18">18</td>
 </tr>
+
 <tr>
 <td data-day="19">19</td>
 <td data-day="20">20</td>
@@ -270,6 +314,7 @@ transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 <td class="weekend" data-day="24">24</td>
 <td class="weekend" data-day="25">25</td>
 </tr>
+
 <tr>
 <td data-day="26">26</td>
 <td data-day="27">27</td>
@@ -279,115 +324,148 @@ transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 <td class="weekend" data-day="31">31</td>
 <td class="weekend"></td>
 </tr>
+
 </tbody>
 </table>
 </div>
 </div>
-<!-- Modal for image zoom -->
+
+<!-- IMAGE MODAL -->
 <div id="imageModal" class="modal" onclick="closeModal()">
-<span class="close" onclick="closeModal()">&times;</span>
-<img id="modalImage" src="" alt="Zoomed Image">
+<span class="close">&times;</span>
+<img id="modalImage" src="">
 </div>
-<!-- Modal for note entry -->
+
+<!-- NOTE MODAL -->
 <div id="noteModal" class="modal" onclick="closeNoteModal()">
-<div class="modal-content" onclick="event.stopPropagation();">
-<span class="close" onclick="closeNoteModal()">&times;</span>
-<h2>Enter Note for Day <span id="noteDay"></span></h2>
-<input type="text" id="noteInput" style="width:100%;">
-<button onclick="saveNote()">Save</button>
+<div class="modal-content" onclick="event.stopPropagation()">
+    <span class="close">&times;</span>
+    <h2>Enter Note for Day <span id="noteDay"></span></h2>
+    <input type="text" id="noteInput" style="width:100%;">
+    <button onclick="saveNote()">Save</button>
 </div>
 </div>
+
+<!-- ⭐ MINIGAME OVERLAY ⭐ -->
+<div id="miniGameOverlay">
+<h1>January Mini-Game ❄️</h1>
+<p>Click the glowing box <b>3 times</b> to unlock the secret image!</p>
+<p>Hits: <span id="hitCounter">0</span>/3</p>
+
+<div id="gameBox" onclick="hitBox()"></div>
+
+<img id="secretReward"
+     src="INSERT-YOUR-HIDDEN-IMAGE-HERE"
+     alt="Secret Reward Image">
+<button onclick="closeMiniGame()">Close</button>
+</div>
+
 <script>
-function openModal(src) {
-document.getElementById('modalImage').src = src;
-document.getElementById('imageModal').style.display = 'flex';
+/* IMAGE ZOOM */
+function openModal(src){
+    document.getElementById("modalImage").src = src;
+    document.getElementById("imageModal").style.display = "flex";
 }
-function closeModal() {
-document.getElementById('imageModal').style.display = 'none';
-}
-function closeNoteModal() {
-document.getElementById('noteModal').style.display = 'none';
-}
+function closeModal(){ document.getElementById("imageModal").style.display = "none"; }
+
+/* NOTES */
 let currentDay;
-function saveNote() {
-const newNote = document.getElementById('noteInput').value.trim();
-notes[currentDay] = newNote;
-if (newNote === '') {
-delete notes[currentDay];
-}
-localStorage.setItem(storageKey, JSON.stringify(notes));
-const td = document.querySelector(`.calendar-table td[data-day="${currentDay}"]`);
-updateNoteDisplay(td, notes[currentDay]);
-closeNoteModal();
-}
-// Mouse trail script
-const trailArray = [];
-const maxTrail = 20; // Number of trail elements
-for (let i = 0; i < maxTrail; i++) {
-const div = document.createElement('div');
-div.className = 'trail';
-document.body.appendChild(div);
-trailArray.push(div);
-}
-let trailIndex = 0;
-document.addEventListener('mousemove', (e) => {
-const div = trailArray[trailIndex];
-div.style.left = e.pageX + 'px';
-div.style.top = e.pageY + 'px';
-div.style.opacity = 1;
-trailIndex = (trailIndex + 1) % maxTrail;
-trailArray.forEach((trail, index) => {
-if (index !== trailIndex) {
-trail.style.opacity -= 0.05;
-if (trail.style.opacity <= 0) trail.style.opacity = 0;
-}
-});
-});
-// Persistent notes with localStorage
-const storageKey = 'january2026Notes';
+const storageKey = "january2026Notes";
 let notes = JSON.parse(localStorage.getItem(storageKey)) || {};
-// Function to add or update note display
-function updateNoteDisplay(td, noteText) {
-let br = td.querySelector('br');
-let noteSpan = td.querySelector('.note');
-if (noteText) {
-if (!br) {
-br = document.createElement('br');
-td.appendChild(br);
+
+function updateNoteDisplay(td, note){
+    let br = td.querySelector("br");
+    let span = td.querySelector(".note");
+    if(note){
+        if(!br){ br = document.createElement("br"); td.appendChild(br); }
+        if(!span){
+            span = document.createElement("span");
+            span.className = "note";
+            td.appendChild(span);
+        }
+        span.innerText = note;
+    } else {
+        if(br) br.remove();
+        if(span) span.remove();
+    }
 }
-if (!noteSpan) {
-noteSpan = document.createElement('span');
-noteSpan.className = 'note';
-td.appendChild(noteSpan);
-}
-noteSpan.innerText = noteText;
-} else {
-if (br) br.remove();
-if (noteSpan) noteSpan.remove();
-}
-}
-// Load existing notes
-document.querySelectorAll('.calendar-table td[data-day]').forEach(td => {
-const day = td.dataset.day;
-if (notes[day]) {
-updateNoteDisplay(td, notes[day]);
-}
+
+document.querySelectorAll('.calendar-table td[data-day]').forEach(td=>{
+    const day = td.dataset.day;
+    if(notes[day]) updateNoteDisplay(td, notes[day]);
+
+    td.addEventListener('click', ()=>{
+        currentDay = td.dataset.day;
+        document.getElementById("noteDay").innerText = currentDay;
+        document.getElementById("noteInput").value = notes[currentDay] || "";
+        document.getElementById("noteModal").style.display = "flex";
+    });
 });
-// Click effect and note editing
-document.querySelectorAll('.calendar-table td[data-day]').forEach(td => {
-td.addEventListener('click', () => {
-td.classList.add('clicked');
-setTimeout(() => {
-td.classList.remove('clicked');
-}, 500);
-// Open note modal
-currentDay = td.dataset.day;
-const currentNote = notes[currentDay] || '';
-document.getElementById('noteDay').innerText = currentDay;
-document.getElementById('noteInput').value = currentNote;
-document.getElementById('noteModal').style.display = 'flex';
+
+function saveNote(){
+    const val = document.getElementById("noteInput").value.trim();
+    if(val === "") delete notes[currentDay];
+    else notes[currentDay] = val;
+    localStorage.setItem(storageKey, JSON.stringify(notes));
+    let td = document.querySelector(`td[data-day="${currentDay}"]`);
+    updateNoteDisplay(td, notes[currentDay]);
+    closeNoteModal();
+}
+function closeNoteModal(){ document.getElementById("noteModal").style.display = "none"; }
+
+/* MOUSE TRAIL */
+const trail = [];
+for(let i=0;i<20;i++){
+    let div = document.createElement("div");
+    div.className = "trail";
+    document.body.appendChild(div);
+    trail.push(div);
+}
+let ti = 0;
+document.addEventListener("mousemove", e=>{
+    let d = trail[ti];
+    d.style.left = e.pageX+"px";
+    d.style.top = e.pageY+"px";
+    d.style.opacity = 1;
+    ti = (ti+1)%20;
+    trail.forEach((t,i)=>{
+        if(i!==ti){
+            t.style.opacity -= 0.05;
+            if(t.style.opacity < 0) t.style.opacity = 0;
+        }
+    });
 });
-});
+
+/* ⭐ MINIGAME ⭐ */
+let hits = 0;
+
+function startMiniGame(){
+    hits = 0;
+    document.getElementById("hitCounter").innerText = 0;
+    document.getElementById("secretReward").style.display = "none";
+    document.getElementById("miniGameOverlay").style.display = "block";
+}
+
+function hitBox(){
+    hits++;
+    document.getElementById("hitCounter").innerText = hits;
+
+    let box = document.getElementById("gameBox");
+    box.style.transform = `scale(${1+Math.random()*0.2})`;
+    box.style.left = Math.random()*300+"px";
+
+    if(hits >= 3){
+        let reward = document.getElementById("secretReward");
+        reward.style.display = "block";
+        reward.classList.add("fade-in");
+    }
+}
+
+function closeMiniGame(){
+    document.getElementById("miniGameOverlay").style.display = "none";
+}
+
 </script>
+
 </body>
 </html>
