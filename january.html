@@ -7,8 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 
 <style>
-/* ---- YOUR ORIGINAL STYLES (UNCHANGED) ---- */
-
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #f0f4f8;
@@ -94,7 +92,6 @@ body {
     letter-spacing: 1px;
 }
 
-/* --- MINIGAME BUTTON STYLE --- */
 #playGameButton {
     display: block;
     margin: 10px auto 20px;
@@ -113,7 +110,6 @@ body {
     transform: scale(1.05);
 }
 
-/* ---- CALENDAR TABLE ---- */
 .calendar-table {
     width: 100%;
     border-collapse: separate;
@@ -158,8 +154,6 @@ body {
     text-shadow: none;
 }
 
-/* ----- MODALS (Image & Notes) ----- */
-
 .modal {
     display: none;
     position: fixed;
@@ -192,8 +186,6 @@ body {
     cursor: pointer;
 }
 
-/* ----- MINIGAME OVERLAY ----- */
-
 #miniGameOverlay {
     display: none;
     position: fixed;
@@ -216,7 +208,6 @@ body {
     transition: 0.1s ease;
 }
 
-/* Hidden reward image */
 #secretReward {
     display: none;
     margin-top: 20px;
@@ -232,7 +223,6 @@ body {
     to {opacity: 1;}
 }
 
-/* Mouse Trail */
 .trail {
     position: absolute;
     width: 8px; height: 8px;
@@ -244,7 +234,6 @@ body {
     z-index: 1000;
     transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
-
 </style>
 </head>
 
@@ -262,8 +251,6 @@ body {
 
     <div class="calendar-section">
         <h2 class="month-title">January 2026 ❄️</h2>
-
-        <!-- ⭐ MINIGAME BUTTON ⭐ -->
         <button id="playGameButton" onclick="startMiniGame()">Play January Mini-Game ❄️</button>
 
         <table class="calendar-table">
@@ -275,7 +262,6 @@ body {
                     <th class="weekend">Sun</th>
                 </tr>
             </thead>
-
             <tbody>
                 <tr>
 <td></td><td></td><td></td>
@@ -284,7 +270,6 @@ body {
 <td class="weekend" data-day="3">3</td>
 <td class="weekend" data-day="4">4</td>
 </tr>
-
 <tr>
 <td data-day="5">5</td>
 <td data-day="6">6</td>
@@ -294,7 +279,6 @@ body {
 <td class="weekend" data-day="10">10</td>
 <td class="weekend" data-day="11">11</td>
 </tr>
-
 <tr>
 <td data-day="12">12</td>
 <td data-day="13">13</td>
@@ -304,7 +288,6 @@ body {
 <td class="weekend" data-day="17">17</td>
 <td class="weekend" data-day="18">18</td>
 </tr>
-
 <tr>
 <td data-day="19">19</td>
 <td data-day="20">20</td>
@@ -314,7 +297,6 @@ body {
 <td class="weekend" data-day="24">24</td>
 <td class="weekend" data-day="25">25</td>
 </tr>
-
 <tr>
 <td data-day="26">26</td>
 <td data-day="27">27</td>
@@ -324,10 +306,9 @@ body {
 <td class="weekend" data-day="31">31</td>
 <td class="weekend"></td>
 </tr>
-
-</tbody>
-</table>
-</div>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <!-- IMAGE MODAL -->
@@ -346,7 +327,7 @@ body {
 </div>
 </div>
 
-<!-- ⭐ MINIGAME OVERLAY ⭐ -->
+<!-- MINIGAME OVERLAY -->
 <div id="miniGameOverlay">
 <h1>January Mini-Game ❄️</h1>
 <p>Click the glowing box <b>3 times</b> to unlock the secret image!</p>
@@ -355,20 +336,18 @@ body {
 <div id="gameBox" onclick="hitBox()"></div>
 
 <img id="secretReward"
-     src="INSERT-YOUR-HIDDEN-IMAGE-HERE"
+     src="https://i.gyazo.com/2de23f75dcbf8cdf09e1735e47174869.png"
      alt="Secret Reward Image">
 <button onclick="closeMiniGame()">Close</button>
 </div>
 
 <script>
-/* IMAGE ZOOM */
 function openModal(src){
     document.getElementById("modalImage").src = src;
     document.getElementById("imageModal").style.display = "flex";
 }
 function closeModal(){ document.getElementById("imageModal").style.display = "none"; }
 
-/* NOTES */
 let currentDay;
 const storageKey = "january2026Notes";
 let notes = JSON.parse(localStorage.getItem(storageKey)) || {};
@@ -413,7 +392,6 @@ function saveNote(){
 }
 function closeNoteModal(){ document.getElementById("noteModal").style.display = "none"; }
 
-/* MOUSE TRAIL */
 const trail = [];
 for(let i=0;i<20;i++){
     let div = document.createElement("div");
@@ -436,17 +414,19 @@ document.addEventListener("mousemove", e=>{
     });
 });
 
-/* ⭐ MINIGAME ⭐ */
 let hits = 0;
+const maxHits = 3;
 
 function startMiniGame(){
     hits = 0;
-    document.getElementById("hitCounter").innerText = 0;
+    document.getElementById("hitCounter").innerText = hits;
     document.getElementById("secretReward").style.display = "none";
+    document.getElementById("gameBox").style.pointerEvents = "auto";
     document.getElementById("miniGameOverlay").style.display = "block";
 }
 
 function hitBox(){
+    if(hits >= maxHits) return; // prevent more than 3 clicks
     hits++;
     document.getElementById("hitCounter").innerText = hits;
 
@@ -454,17 +434,17 @@ function hitBox(){
     box.style.transform = `scale(${1+Math.random()*0.2})`;
     box.style.left = Math.random()*300+"px";
 
-    if(hits >= 3){
+    if(hits >= maxHits){
         let reward = document.getElementById("secretReward");
         reward.style.display = "block";
         reward.classList.add("fade-in");
+        box.style.pointerEvents = "none";
     }
 }
 
 function closeMiniGame(){
     document.getElementById("miniGameOverlay").style.display = "none";
 }
-
 </script>
 
 </body>
